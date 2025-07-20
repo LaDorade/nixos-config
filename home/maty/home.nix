@@ -35,9 +35,6 @@
     gs = "git status";
   };
 
-  # Exemple de configuration de Neovim (peut être enrichie)
-  programs.neovim.enable = true;
-
   # Définir des variables d'environnement
   home.sessionVariables = {
     EDITOR = "nvim";

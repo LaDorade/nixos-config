@@ -23,7 +23,11 @@
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
-
+  fileSystems."/mnt/steamgames" = {
+    device = "/dev/disk/by-uuid/17ee64be-2d28-4040-ad87-f3a22a44ce1e";
+    fsType = "ext4";
+  };
+ 
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
