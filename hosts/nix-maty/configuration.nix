@@ -35,8 +35,6 @@
 
   networking.hostName = "nix-maty"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
@@ -107,20 +105,11 @@
     description = "maty";
     extraGroups = [ "networkmanager" "wheel" "gamer" ];
     packages = with pkgs; [
-      discord-ptb
-    #  thunderbird
     ];
   };
-
-  # Install firefox.
-  programs.firefox.enable = true;
-
-
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  programs.firefox.enable = true;
+  programs.steam.enable = true;
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   ];

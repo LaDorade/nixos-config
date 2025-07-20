@@ -1,18 +1,36 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
+let 
+  mangohud = import ../../modules/mangohud.nix { inherit config lib pkgs; };
+in
 {
-  # Nom de l'utilisateur et chemin vers son home
   home.username = "maty";
   home.homeDirectory = "/home/maty";
 
-  # Activer Home Manager
   programs.home-manager.enable = true;
 
-  # Paquets à installer pour cet utilisateur
+  programs.mangohud = {
+    enable = true;
+    enableSessionWide = true;
+    settings = {
+      gpu_stats = true;
+      gpu_temp = true;
+      cpu_stats = true;
+      cpu_temp = true;
+      vram = true;
+      ram = true;
+      swap = true;
+      fps = true;
+      frametime = true;
+      frame_timing = true;
+      resolution = true;
+    };
+  };
+
   home.packages = with pkgs; [
     neovim
+    discord-ptb
     protonup
-    mangohud
     ripgrep
     fastfetch
     htop
@@ -21,21 +39,18 @@
     file
   ];
 
-  # Configuration Git (exemple basique)
   programs.git = {
     enable = true;
     userName = "matysse";
     userEmail = "mathisjung02@gmail.com";
   };
 
-  # Bash configuration
   programs.bash.enable = true;
   programs.bash.shellAliases = {
     ll = "ls -la";
     gs = "git status";
   };
 
-  # Définir des variables d'environnement
   home.sessionVariables = {
     EDITOR = "nvim";
     PATH = "$HOME/.local/bin:$PATH";
