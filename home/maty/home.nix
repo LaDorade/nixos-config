@@ -4,6 +4,12 @@ let
   mangohud = import ../../modules/mangohud.nix { inherit config lib pkgs; };
 in
 {
+  imports = [
+    ../../modules/dev.nix
+  ];
+  devEnvs.enable = true;
+  devEnvs.rustEnv.enable = true;
+
   home.username = "maty";
   home.homeDirectory = "/home/maty";
 
