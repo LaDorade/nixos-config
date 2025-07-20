@@ -11,7 +11,10 @@
   # Paquets à installer pour cet utilisateur
   home.packages = with pkgs; [
     neovim
-    git
+    protonup
+    mangohud
+    ripgrep
+    fastfetch
     htop
     curl
     unzip
