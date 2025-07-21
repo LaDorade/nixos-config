@@ -22,11 +22,29 @@
         home-manager.nixosModules.home-manager
         {
 	  home-manager.useGlobalPkgs = true;
-          home-manager.users.maty = import ./home/maty/home.nix;
+          home-manager.users.maty= import ./home/maty/home.nix;
 	  home-manager.backupFileExtension = "backup";
         }
       ];
     };
+    nixosConfigurations."lenovo-laptop" = lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = {inherit inputs lib;};
+      modules = [
+        ./hosts/lenovo-laptop/configuration.nix
+        ({ lib, ...}: {
+	  mySystem.mainUser = "lenovo";
+	})
+	./modules/docker.nix
+        home-manager.nixosModules.home-manager
+        {
+	  home-manager.useGlobalPkgs = true;
+          home-manager.users.lenovo = import ./home/lenovo/home.nix;
+	  home-manager.backupFileExtension = "backup";
+        }
+      ];
+    };
+
   };
 }
 
