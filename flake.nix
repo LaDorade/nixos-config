@@ -38,6 +38,10 @@
               home-manager.useGlobalPkgs = true;
               home-manager.users.${username} = import ./home/${username}/home.nix;
               home-manager.backupFileExtension = "backup";
+	      home-manager.extraSpecialArgs = {
+	        mainUser = username;
+	        hostName = hostname;
+	      };
             }
           ];
         };

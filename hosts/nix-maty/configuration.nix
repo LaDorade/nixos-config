@@ -1,12 +1,16 @@
 {
   config,
   pkgs,
+  mainUser,
   ...
-}: {
+}:let 
+  username = mainUser;
+in{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../common.nix
+    ../../modules/shell.nix
   ];
 
   # Bootloader.
@@ -48,14 +52,14 @@
     pulse.enable = true;
   };
   users.groups.gamer = {};
-  users.users.maty = {
+  users.users.${username} = {
     isNormalUser = true;
-    description = "maty";
+    description = username; 
     extraGroups = ["networkmanager" "wheel" "gamer"];
     packages = with pkgs; [
     ];
   };
- programs.firefox.enable = true;
+  programs.firefox.enable = true;
   programs.steam = {
     enable = true;
     extraCompatPackages = [

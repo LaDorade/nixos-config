@@ -2,22 +2,25 @@
   config,
   lib,
   pkgs,
+  mainUser,
   ...
 }: let
-  mangohud = import ../../modules/mangohud.nix {inherit config lib pkgs;};
+  username = mainUser;
 in {
   imports = [
     ../../modules/dev.nix
+    ../../modules/shell.nix
+    ../../modules/alacritty.nix
   ];
   devEnvs.enable = true;
   devEnvs.rustEnv.enable = true;
 
-  home.username = "maty";
-  home.homeDirectory = "/home/maty";
+  home.username = username;
+  home.homeDirectory = "/home/${username}";
 
   programs.home-manager.enable = true;
 
-  programs.mangohud = {
+  programs.mangohud= {
     enable = true;
     settings = {
       gpu_stats = true;
@@ -39,8 +42,12 @@ in {
     };
   };
 
+  programs.neovim = {
+    enable = true;
+    extraPackages = with pkgs; [ wayclip xclip wl-clipboard-x11 ];
+  };
+
   home.packages = with pkgs; [
-    neovim
     discord-ptb
     pinta
     protonup
