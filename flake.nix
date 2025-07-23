@@ -26,12 +26,12 @@
       }:
         lib.nixosSystem {
           inherit system;
-          specialArgs = {inherit inputs lib;};
+          specialArgs = {
+	    inherit inputs lib;
+	    mainUser = username;
+	    hostName = hostname;
+	  };
           modules = [
-            ({lib, ...}: {
-              mySystem.mainUser = username;
-              mySystem.hostName = hostname;
-            })
             ./hosts/${hostname}/configuration.nix
             home-manager.nixosModules.home-manager
             {

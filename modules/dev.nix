@@ -18,11 +18,10 @@ in {
       mkIf cfg.rustEnv.enable [
         rustup # provides rustc, cargo, rust-analyzer and more
       ];
-    home.packages = with pkgs;
-      home.packages
-      ++ mkIf cfg.jsEnv.enable [
-        nodejs_24 # provides node, npm, npx
-        yarn
-      ];
+      # todo implement js env
+      #++ mkIf cfg.jsEnv.enable [
+      #  nodejs_24 # provides node, npm, npx
+      #  yarn
+      #];
   };
 }

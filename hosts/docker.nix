@@ -2,9 +2,9 @@
   config,
   pkgs,
   lib,
+  username,
   ...
 }: let
-  username = config.mySystem.mainUser;
 in {
   options = {
     enableDocker = lib.mkOption {
