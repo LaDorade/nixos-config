@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.devEnvs;
 in {
@@ -11,13 +14,15 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; mkIf cfg.rustEnv.enable [
-      rustc
-      cargo
-      clippy
-      rust-analyzer
-      rustfmt
-    ];
+    home.packages = with pkgs;
+      mkIf cfg.rustEnv.enable [
+        rustup # provides rustc, cargo, rust-analyzer and more
+      ];
+    home.packages = with pkgs;
+      home.packages
+      ++ mkIf cfg.jsEnv.enable [
+        nodejs_24 # provides node, npm, npx
+        yarn
+      ];
   };
 }
-

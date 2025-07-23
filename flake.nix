@@ -10,41 +10,46 @@
     nixpkgs-fmt.url = "github:nix-community/nixpkgs-fmt";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: 
-  let
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
     lib = nixpkgs.lib;
   in {
-    nixosConfigurations."nix-maty" = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = {inherit inputs lib;};
-      modules = [
-        ./hosts/nix-maty/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-	  home-manager.useGlobalPkgs = true;
-          home-manager.users.maty= import ./home/maty/home.nix;
-	  home-manager.backupFileExtension = "backup";
-        }
-      ];
+    nixosConfigurations = let
+      mkNixosSystem = {
+        hostname,
+        username,
+        system ? "x86_64-linux",
+      }:
+        lib.nixosSystem {
+          inherit system;
+          specialArgs = {inherit inputs lib;};
+          modules = [
+            ({lib, ...}: {
+              mySystem.mainUser = username;
+              mySystem.hostName = hostname;
+            })
+            ./hosts/${hostname}/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.users.${username} = import ./home/${username}/home.nix;
+              home-manager.backupFileExtension = "backup";
+            }
+          ];
+        };
+    in {
+      "nix-maty" = mkNixosSystem {
+        hostname = "nix-maty";
+        username = "maty";
+      };
+      "lenovo-laptop" = mkNixosSystem {
+        hostname = "lenovo-laptop";
+        username = "lenovo";
+      };
     };
-    nixosConfigurations."lenovo-laptop" = lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = {inherit inputs lib;};
-      modules = [
-        ./hosts/lenovo-laptop/configuration.nix
-        ({ lib, ...}: {
-	  mySystem.mainUser = "lenovo";
-	})
-	./modules/docker.nix
-        home-manager.nixosModules.home-manager
-        {
-	  home-manager.useGlobalPkgs = true;
-          home-manager.users.lenovo = import ./home/lenovo/home.nix;
-	  home-manager.backupFileExtension = "backup";
-        }
-      ];
-    };
-
   };
 }
-

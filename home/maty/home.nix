@@ -1,9 +1,11 @@
-{ config, lib, pkgs, ... }:
-
-let 
-  mangohud = import ../../modules/mangohud.nix { inherit config lib pkgs; };
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  mangohud = import ../../modules/mangohud.nix {inherit config lib pkgs;};
+in {
   imports = [
     ../../modules/dev.nix
   ];
@@ -73,4 +75,3 @@ in
   # Version de la config, doit rester constante après première install
   home.stateVersion = "25.05";
 }
-

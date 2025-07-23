@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   username = config.mySystem.mainUser;
 in {
   options = {
@@ -20,16 +23,15 @@ in {
     assertions = [
       {
         assertion = config.mySystem.mainUser != "";
-	message = "mainUser doit être défini pour ajouter le groupe docker";
+        message = "mainUser doit être défini pour ajouter le groupe docker";
       }
     ];
 
     virtualisation.docker.enable = true;
-    environment.systemPackages = with pkgs; [ docker-compose ];
+    environment.systemPackages = with pkgs; [docker-compose];
 
-    users.users.${username}.extraGroups = [ "docker" ];
+    users.users.${username}.extraGroups = ["docker"];
 
-    systemd.services.docker.wantedBy = lib.mkForce [ "multi-user.target" ];
+    systemd.services.docker.wantedBy = lib.mkForce ["multi-user.target"];
   };
 }
-

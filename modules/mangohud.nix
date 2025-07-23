@@ -1,30 +1,27 @@
+# Stolen from someone's NixOS config, but I don't remember who
 {
   config,
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf mkOption types;
 
   cfg = config.programs.mangohud;
 
-  settingsType =
-    with types;
-    (oneOf [
-      bool
+  settingsType = with types; (oneOf [
+    bool
+    int
+    float
+    str
+    path
+    (listOf (oneOf [
       int
-      float
       str
-      path
-      (listOf (oneOf [
-        int
-        str
-      ]))
-    ]);
+    ]))
+  ]);
 
-  renderOption =
-    option:
+  renderOption = option:
     rec {
       int = toString option;
       float = int;
@@ -33,19 +30,22 @@ let
       string = option;
       list = lib.concatStringsSep "," (lib.lists.forEach option (x: toString x));
     }
-    .${builtins.typeOf option};
+    .${
+      builtins.typeOf option
+    };
 
-  renderLine = k: v: (if lib.isBool v && v then k else "${k}=${renderOption v}");
-  renderSettings =
-    attrs: lib.strings.concatStringsSep "\n" (lib.attrsets.mapAttrsToList renderLine attrs) + "\n";
-
-in
-{
+  renderLine = k: v: (
+    if lib.isBool v && v
+    then k
+    else "${k}=${renderOption v}"
+  );
+  renderSettings = attrs: lib.strings.concatStringsSep "\n" (lib.attrsets.mapAttrsToList renderLine attrs) + "\n";
+in {
   options = {
     programs.mangohud = {
       enable = lib.mkEnableOption "Mangohud";
 
-      package = lib.mkPackageOption pkgs "mangohud" { };
+      package = lib.mkPackageOption pkgs "mangohud" {};
 
       enableSessionWide = mkOption {
         type = types.bool;
@@ -58,7 +58,7 @@ in
 
       settings = mkOption {
         type = with types; attrsOf settingsType;
-        default = { };
+        default = {};
         example = lib.literalExpression ''
           {
             output_folder = ~/Documents/mangohud/;
@@ -75,7 +75,7 @@ in
 
       settingsPerApplication = mkOption {
         type = with types; attrsOf (attrsOf settingsType);
-        default = { };
+        default = {};
         example = lib.literalExpression ''
           {
             mpv = {
@@ -99,7 +99,7 @@ in
       (lib.hm.assertions.assertPlatform "programs.mangohud" pkgs lib.platforms.linux)
     ];
 
-    home.packages = [ cfg.package ];
+    home.packages = [cfg.package];
 
     home.sessionVariables = mkIf cfg.enableSessionWide {
       MANGOHUD = 1;
@@ -108,10 +108,11 @@ in
 
     xdg.configFile =
       {
-        "MangoHud/MangoHud.conf" = mkIf (cfg.settings != { }) { text = renderSettings cfg.settings; };
+        "MangoHud/MangoHud.conf" = mkIf (cfg.settings != {}) {text = renderSettings cfg.settings;};
       }
       // lib.mapAttrs' (
-        n: v: lib.nameValuePair "MangoHud/${n}.conf" { text = renderSettings v; }
-      ) cfg.settingsPerApplication;
+        n: v: lib.nameValuePair "MangoHud/${n}.conf" {text = renderSettings v;}
+      )
+      cfg.settingsPerApplication;
   };
 }
