@@ -1,8 +1,10 @@
-{ config, lib, pkgs, ... }:
-
-let 
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+in {
   imports = [
   ];
 
@@ -41,4 +43,3 @@ in
   # Version de la config, doit rester constante après première install
   home.stateVersion = "25.05";
 }
-
