@@ -2,9 +2,10 @@
   config,
   pkgs,
   lib,
-  username,
+  mainUser,
   ...
 }: let
+  username = mainUser;
 in {
   options = {
     enableDocker = lib.mkOption {
@@ -12,17 +13,12 @@ in {
       default = true;
       description = "Enable Docker and configure the daemon.";
     };
-    mySystem.mainUser = lib.mkOption {
-      type = lib.types.str;
-      example = "alice";
-      description = "Nom d'utilisateur principal du système (pour le groupe docker, etc).";
-    };
   };
 
   config = lib.mkIf config.enableDocker {
     assertions = [
       {
-        assertion = config.mySystem.mainUser != "";
+        assertion = username != "";
         message = "mainUser doit être défini pour ajouter le groupe docker";
       }
     ];
