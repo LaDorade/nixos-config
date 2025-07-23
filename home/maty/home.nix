@@ -17,7 +17,6 @@ in
 
   programs.mangohud = {
     enable = true;
-    enableSessionWide = true;
     settings = {
       gpu_stats = true;
       gpu_temp = true;
@@ -31,11 +30,17 @@ in
       frame_timing = true;
       resolution = true;
     };
+    settingsPerApplication = {
+      pinta = {
+        no_display = true;
+      };
+    };
   };
 
   home.packages = with pkgs; [
     neovim
     discord-ptb
+    pinta
     protonup
     ripgrep
     fastfetch

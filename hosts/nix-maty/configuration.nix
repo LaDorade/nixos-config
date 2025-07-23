@@ -40,6 +40,7 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  hardware.bluetooth.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Paris";
@@ -109,9 +110,19 @@
   };
   nixpkgs.config.allowUnfree = true;
   programs.firefox.enable = true;
-  programs.steam.enable = true;
+  programs.steam = {
+    enable = true;
+    extraCompatPackages = [
+      pkgs.proton-ge-bin
+    ];
+  };
+  programs.nh = {
+    enable = true;
+    flake = null;
+    clean.enable = true;
+  };
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
