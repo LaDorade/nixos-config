@@ -3,14 +3,13 @@
   pkgs,
   mainUser,
   ...
-}:let 
+}: let
   username = mainUser;
-in{
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../common.nix
-    ../../modules/shell.nix
   ];
 
   # Bootloader.
@@ -54,7 +53,7 @@ in{
   users.groups.gamer = {};
   users.users.${username} = {
     isNormalUser = true;
-    description = username; 
+    description = username;
     extraGroups = ["networkmanager" "wheel" "gamer"];
     packages = with pkgs; [
     ];
