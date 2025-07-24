@@ -29,7 +29,7 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.users.${username} = import ./home/${username}.nix;
+                home-manager.users.${username} = import ./home/${username}/home.nix;
                 home-manager.backupFileExtension = "backup";
                 home-manager.extraSpecialArgs = {
                   mainUser = username;
@@ -57,7 +57,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users."matysse_blg" = import ./home/matysse_blg.nix;
+              home-manager.users."matysse_blg" = import ./home/matysse_blg/home.nix;
               home-manager.backupFileExtension = "backup";
             }
           ];

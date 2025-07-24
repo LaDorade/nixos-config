@@ -39,6 +39,7 @@ in {
 
   home.packages = with pkgs; [
     discord-ptb
+    obsidian
     pinta
     protonup
     ripgrep
