@@ -5,6 +5,7 @@ in {
     ../../modules/dev.nix
     ../../modules/shell.nix
     ../../modules/alacritty.nix
+    ../../modules/nixvim.nix
   ];
   devEnvs.enable = true;
   devEnvs.rustEnv.enable = true;
@@ -32,10 +33,6 @@ in {
     settingsPerApplication = { pinta = { no_display = true; }; };
   };
 
-  programs.neovim = {
-    enable = true;
-    extraPackages = with pkgs; [ wayclip xclip wl-clipboard-x11 ];
-  };
 
   home.packages = with pkgs; [
     discord-ptb
