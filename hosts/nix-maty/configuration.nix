@@ -1,10 +1,5 @@
-{
-  config,
-  pkgs,
-  mainUser,
-  ...
-}: let
-  username = mainUser;
+{ config, pkgs, mainUser, ... }:
+let username = mainUser;
 in {
   imports = [
     # Include the results of the hardware scan.
@@ -29,10 +24,8 @@ in {
     "d /mnt/steamgames 0770 root gamer - -"
   ];
 
-  hardware.graphics = {
-    enable = true;
-  };
-  services.xserver.videoDrivers = ["amdgpu"];
+  hardware.graphics = { enable = true; };
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   networking.hostName = "nix-maty"; # Define your hostname.
 
@@ -50,20 +43,17 @@ in {
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-  users.groups.gamer = {};
+  users.groups.gamer = { };
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = ["networkmanager" "wheel" "gamer"];
-    packages = with pkgs; [
-    ];
+    extraGroups = [ "networkmanager" "wheel" "gamer" ];
+    packages = with pkgs; [ ];
   };
   programs.firefox.enable = true;
   programs.steam = {
     enable = true;
-    extraCompatPackages = [
-      pkgs.proton-ge-bin
-    ];
+    extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
   programs.nh = {
     enable = true;

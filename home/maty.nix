@@ -1,11 +1,5 @@
-{
-  config,
-  lib,
-  pkgs,
-  mainUser,
-  ...
-}: let
-  username = mainUser;
+{ config, lib, pkgs, mainUser, ... }:
+let username = mainUser;
 in {
   imports = [
     ../../modules/dev.nix
@@ -20,7 +14,7 @@ in {
 
   programs.home-manager.enable = true;
 
-  programs.mangohud= {
+  programs.mangohud = {
     enable = true;
     settings = {
       gpu_stats = true;
@@ -35,11 +29,7 @@ in {
       frame_timing = true;
       resolution = true;
     };
-    settingsPerApplication = {
-      pinta = {
-        no_display = true;
-      };
-    };
+    settingsPerApplication = { pinta = { no_display = true; }; };
   };
 
   programs.neovim = {

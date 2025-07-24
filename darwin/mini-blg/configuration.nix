@@ -1,17 +1,11 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{ config, pkgs, ... }: {
   # System settings
   system.stateVersion = 6;
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   # Nix configuration
   nix = {
-    settings = {
-      experimental-features = ["nix-command" "flakes"];
-    };
+    settings = { experimental-features = [ "nix-command" "flakes" ]; };
     gc = {
       automatic = true;
       interval = {
@@ -24,12 +18,7 @@
   };
 
   # System packages
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-    curl
-    wget
-  ];
+  environment.systemPackages = with pkgs; [ nixfmt nixd vim git curl wget ];
 
   # User settings
   users.users.matysse_blg = {

@@ -1,16 +1,9 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+{ config, pkgs, ... }: {
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   networking.networkmanager.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-  ];
+  environment.systemPackages = with pkgs; [ vim wget ];
 
   time.timeZone = "Europe/Paris";
   i18n.defaultLocale = "fr_FR.UTF-8";

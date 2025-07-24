@@ -1,16 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  osConfig,
-  ...
-}: let
+{ config, lib, pkgs, osConfig, ... }:
+let
 in {
-  home.packages = with pkgs; [
-    neovim
-    ripgrep
-    fastfetch
-  ];
+  home.packages = with pkgs; [ neovim ripgrep fastfetch ];
 
   # Pour générer les fichiers de configuration dans ~/.config
   xdg.enable = true;

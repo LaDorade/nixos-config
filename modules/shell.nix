@@ -1,6 +1,5 @@
-{ pkgs, ... }:
-{
- programs.fish = {
+{ pkgs, ... }: {
+  programs.fish = {
     enable = true;
 
     shellAliases = {
@@ -14,5 +13,4 @@
     '';
   };
 }
-
 

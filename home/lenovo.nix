@@ -1,24 +1,11 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config, lib, pkgs, ... }:
+let
 in {
-  imports = [
-  ];
+  imports = [ ];
 
   home.username = "lenovo";
   home.homeDirectory = "/home/lenovo";
-  home.packages = with pkgs; [
-    neovim
-    ripgrep
-    fastfetch
-    htop
-    curl
-    unzip
-    file
-  ];
+  home.packages = with pkgs; [ neovim ripgrep fastfetch htop curl unzip file ];
 
   programs.git = {
     enable = true;
