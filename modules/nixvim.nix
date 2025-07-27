@@ -1,4 +1,4 @@
-{pkgs, ...}:{
+{ pkgs, ... }: {
   programs.nixvim = {
     enable = true;
     opts = {
@@ -9,40 +9,36 @@
     plugins = {
       nix.enable = true;
       comment.enable = true;
-      oil = {
-	enable = true;
-      };
+      oil = { enable = true; };
       treesitter = {
         enable = true;
-	settings = {
-	  ensure_installed = [ "lua" "python" "rust" "nix" "bash" "json" ];
-	  highlight = {
-	    enable = true;
-	    # additionalVimRegexHighlighting = false; # true si tu veux combiner avec l'ancienne coloration
-	  };
-	};
+        settings = {
+          ensure_installed = [ "lua" "python" "rust" "nix" "bash" "json" ];
+          highlight = {
+            enable = true;
+            # additionalVimRegexHighlighting = false; # true si tu veux combiner avec l'ancienne coloration
+          };
+        };
 
         grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-	  bash
-	  json
-	  lua
-	  make
-	  markdown
-	  nix
-	  regex
-	  toml
-	  vim
-	  vimdoc
-	  xml
-	  yaml
-	];
+          bash
+          json
+          lua
+          make
+          markdown
+          nix
+          regex
+          toml
+          vim
+          vimdoc
+          xml
+          yaml
+        ];
       };
     };
     colorschemes.modus.enable = true;
     plugins.lualine.enable = true;
 
-    extraPackages = with pkgs; [
-      wl-clipboard
-    ];
+    extraPackages = with pkgs; [ wl-clipboard ];
   };
 }

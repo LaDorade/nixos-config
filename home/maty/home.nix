@@ -34,7 +34,6 @@ in {
     settingsPerApplication = { pinta = { no_display = true; }; };
   };
 
-
   home.packages = with pkgs; [
     discord-ptb
     obsidian
