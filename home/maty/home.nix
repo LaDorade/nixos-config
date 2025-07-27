@@ -5,6 +5,7 @@ in {
     ../../modules/dev.nix
     ../../modules/shell.nix
     ../../modules/alacritty.nix
+    ../../modules/kitty.nix
     ../../modules/nixvim.nix
   ];
   devEnvs.enable = true;
