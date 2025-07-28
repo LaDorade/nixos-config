@@ -6,6 +6,7 @@ in {
   home.username = "pi";
   home.homeDirectory = "/home/pi";
   home.packages = with pkgs; [
+    neovim
     ripgrep
     fastfetch
     htop
