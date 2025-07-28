@@ -37,7 +37,7 @@
     let lib = nixpkgs.lib;
     in {
       nixosConfigurations = let
-        mkNixosSystem = { hostname, username, system ? "x86_64-linux", }:
+        mkNixosSystem = { hostname, username, system ? "x86_64-linux", full ? true }:
           lib.nixosSystem {
             inherit system;
             specialArgs = {
@@ -54,7 +54,7 @@
                 home-manager.users.${username} =
                   import ./home/${username}/home.nix;
                 home-manager.backupFileExtension = "backup";
-                home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
+                home-manager.sharedModules = [ ] ++ lib.optionals full [ nixvim.homeModules.nixvim ];
                 home-manager.extraSpecialArgs = {
                   mainUser = username;
                   hostName = hostname;
@@ -71,6 +71,12 @@
           hostname = "lenovo-laptop";
           username = "lenovo";
         };
+	"nix-pi" = mkNixosSystem {
+	  hostname = "nix-pi";
+	  username = "pi";
+	  system = "aarch64-linux";
+	  full = false;
+	};
       };
       darwinConfigurations = let
         mkDarwinSystem = { hostname, username, system ? "aarch64-darwin", enableHomebrew ? false }:
