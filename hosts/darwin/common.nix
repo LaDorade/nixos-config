@@ -1,7 +1,5 @@
 { config, pkgs, mainUser, ... }: {
-  imports = [
-    ../base.nix
-  ];
+  imports = [ ../base.nix ];
 
   system.primaryUser = mainUser;
   # User settings
@@ -25,10 +23,7 @@
   };
 
   # System packages
-  environment.systemPackages = with pkgs; [
-    nixfmt
-    nixd
-  ];
+  environment.systemPackages = with pkgs; [ nixfmt nixd ];
   # environment.pathsToLink = [ "/Applications/Nix Apps" ];
   # # Pour créer automatiquement le dossier et gérer les liens d’applications :
   # environment.variables.NIX_APP_LINK_DIR = "/Applications/Nix Apps";

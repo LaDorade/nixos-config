@@ -1,13 +1,5 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
-  imports = [
-    ./hardware-configuration.nix
-    ../common.nix
-  ];
+{ config, pkgs, lib, ... }: {
+  imports = [ ./hardware-configuration.nix ../common.nix ];
   networking.hostName = "nix-pi";
   services.openssh = {
     enable = true;
@@ -20,41 +12,43 @@
     recommendedTlsSettings = true;
 
     # other Nginx options
-    virtualHosts."home.canard.cc" =  {
+    virtualHosts."home.canard.cc" = {
       enableACME = true;
       forceSSL = true;
       root = "/var/www/home";
       #locations."/" = {
-        #proxyPass = "http://127.0.0.1:12345";
-        #proxyWebsockets = true; # needed if you need to use WebSocket
-        #extraConfig =
-          # required when the target is also TLS server with multiple hosts
-          #"proxy_ssl_server_name on;" +
-          # required when the server wants to use HTTP Authentication
-          #"proxy_pass_header Authorization;"
-          #;
+      #proxyPass = "http://127.0.0.1:12345";
+      #proxyWebsockets = true; # needed if you need to use WebSocket
+      #extraConfig =
+      # required when the target is also TLS server with multiple hosts
+      #"proxy_ssl_server_name on;" +
+      # required when the server wants to use HTTP Authentication
+      #"proxy_pass_header Authorization;"
+      #;
       #};
     };
   };
   security.acme.acceptTerms = true;
-  security.acme.certs = {
-    "home.canard.cc".email = "youremail@address.com";
-  };
+  security.acme.certs = { "home.canard.cc".email = "youremail@address.com"; };
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ 80 443 8080 ];
     allowedUDPPortRanges = [
-      { from = 4000; to = 4007; }
-      { from = 8000; to = 8010; }
+      {
+        from = 4000;
+        to = 4007;
+      }
+      {
+        from = 8000;
+        to = 8010;
+      }
     ];
   };
-
-
 
   users.users.pi = {
     isNormalUser = true;
     password = "pi";
-    extraGroups = [ "wheel" "networkmanager"];
+    extraGroups = [ "wheel" "networkmanager" ];
   };
 
   system.stateVersion = "25.05";

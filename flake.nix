@@ -10,9 +10,7 @@
     nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     # Nix-Homebrew simply installs Homebrew
-    nix-homebrew = {
-      url = "github:zhaofengli-wip/nix-homebrew";
-    };
+    nix-homebrew = { url = "github:zhaofengli-wip/nix-homebrew"; };
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
       flake = false;
@@ -33,11 +31,13 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-darwin, nixvim, nix-homebrew, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nix-darwin, nixvim, nix-homebrew, ...
+    }@inputs:
     let lib = nixpkgs.lib;
     in {
       nixosConfigurations = let
-        mkNixosSystem = { hostname, username, system ? "x86_64-linux", full ? true }:
+        mkNixosSystem =
+          { hostname, username, system ? "x86_64-linux", full ? true }:
           lib.nixosSystem {
             inherit system;
             specialArgs = {
@@ -54,7 +54,8 @@
                 home-manager.users.${username} =
                   import ./home/${username}/home.nix;
                 home-manager.backupFileExtension = "backup";
-                home-manager.sharedModules = [ ] ++ lib.optionals full [ nixvim.homeModules.nixvim ];
+                home-manager.sharedModules = [ ]
+                  ++ lib.optionals full [ nixvim.homeModules.nixvim ];
                 home-manager.extraSpecialArgs = {
                   mainUser = username;
                   hostName = hostname;
@@ -79,45 +80,47 @@
         };
       };
       darwinConfigurations = let
-        mkDarwinSystem = { hostname, username, system ? "aarch64-darwin", enableHomebrew ? false }:
+        mkDarwinSystem = { hostname, username, system ? "aarch64-darwin"
+          , enableHomebrew ? false }:
           nix-darwin.lib.darwinSystem {
-        inherit system;
-        specialArgs = { 
-          inherit inputs lib;
-          mainUser = username;
-          hostName = hostname;
-        };
-        modules = [
-          ./hosts/darwin/${hostname}/configuration.nix
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.${username} = import ./home/${username}/home.nix;
-            home-manager.backupFileExtension = "backup";
-            home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
-            home-manager.extraSpecialArgs = {
+            inherit system;
+            specialArgs = {
+              inherit inputs lib;
               mainUser = username;
               hostName = hostname;
             };
-          }
-        ] ++ lib.optionals enableHomebrew [
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              user = username;
-              enable = true;
-              enableRosetta = true;
-              taps = {
-                "homebrew/homebrew-core" = inputs.homebrew-core;
-                "homebrew/homebrew-cask" = inputs.homebrew-cask;
-                "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
-              };
-              mutableTaps = false;
-              autoMigrate = true;
-            };
-          }
-        ];
+            modules = [
+              ./hosts/darwin/${hostname}/configuration.nix
+              home-manager.darwinModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.${username} =
+                  import ./home/${username}/home.nix;
+                home-manager.backupFileExtension = "backup";
+                home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
+                home-manager.extraSpecialArgs = {
+                  mainUser = username;
+                  hostName = hostname;
+                };
+              }
+            ] ++ lib.optionals enableHomebrew [
+              nix-homebrew.darwinModules.nix-homebrew
+              {
+                nix-homebrew = {
+                  user = username;
+                  enable = true;
+                  enableRosetta = true;
+                  taps = {
+                    "homebrew/homebrew-core" = inputs.homebrew-core;
+                    "homebrew/homebrew-cask" = inputs.homebrew-cask;
+                    "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+                  };
+                  mutableTaps = false;
+                  autoMigrate = true;
+                };
+              }
+            ];
           };
       in {
         "mini-blg" = mkDarwinSystem {

@@ -58,7 +58,7 @@ in {
   # Manager AMD gpu
   environment.systemPackages = with pkgs; [ lact ];
   systemd.packages = with pkgs; [ lact ];
-  systemd.services.lactd.wantedBy = ["multi-user.target"];
+  systemd.services.lactd.wantedBy = [ "multi-user.target" ];
 
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?

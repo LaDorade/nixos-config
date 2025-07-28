@@ -1,3 +1,1 @@
-{ config, pkgs, mainUser, ... }: {
-  imports = [ ../common.nix ];
-}
+{ config, pkgs, mainUser, ... }: { imports = [ ../common.nix ]; }

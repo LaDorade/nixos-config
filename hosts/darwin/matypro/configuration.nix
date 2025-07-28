@@ -6,11 +6,7 @@
     enable = true;
     onActivation.cleanup = "uninstall";
 
-    brews = [ 
-      "cowsay" 
-    ];
-    casks = [
-      "bruno"
-    ];
+    brews = [ "cowsay" ];
+    casks = [ "bruno" ];
   };
 }

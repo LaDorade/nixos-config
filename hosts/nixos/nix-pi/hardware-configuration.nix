@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, pkgs, ... }:
 
 {
   boot.kernelPackages = lib.mkDefault pkgs.linuxKernel.packages.linux_rpi3;
@@ -11,21 +7,22 @@
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
       fsType = "ext4";
-      options = ["noatime"];
+      options = [ "noatime" ];
     };
   };
   # zramSwap.enable = true;
-  swapDevices = [ {
+  swapDevices = [{
     device = "/var/lib/swapfile";
-    size = 4*1024;
-  } ];
+    size = 4 * 1024;
+  }];
 
   # fix the following error :
   # modprobe: FATAL: Module ahci not found in directory
   # https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-1350599022
   nixpkgs.overlays = [
     (_final: super: {
-      makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
+      makeModulesClosure = x:
+        super.makeModulesClosure (x // { allowMissing = true; });
     })
   ];
 
@@ -39,9 +36,6 @@
   # The serial ports listed here are:
   # - ttyS0: serial
   # - tty0: hdmi
-  boot.kernelParams = [
-    "console=ttyS0,115200n8"
-    "console=tty0"
-  ];
+  boot.kernelParams = [ "console=ttyS0,115200n8" "console=tty0" ];
 
 }

@@ -1,15 +1,16 @@
-{ config, lib, pkgs, mainUser, ... }:
-{
-  home.packages = with pkgs; [
-    neovim
-    ripgrep
-    fastfetch
-    htop
-  ];
-
-  programs.zoxide = {
+{ config, lib, pkgs, mainUser, ... }: {
+  # ? Move this to the common of configs
+  # but this can only be done in systemPackages
+  # because nix darwin does not have programs.nh
+  programs.nh = {
     enable = true;
+    flake = null;
+    clean.enable = true;
   };
+
+  home.packages = with pkgs; [ neovim ripgrep fastfetch htop ];
+
+  programs.zoxide = { enable = true; };
 
   programs.git = {
     enable = true;
@@ -31,6 +32,6 @@
 
   # Pour générer les fichiers de configuration dans ~/.config
   xdg.enable = true;
-  
+
   programs.home-manager.enable = true;
 }
