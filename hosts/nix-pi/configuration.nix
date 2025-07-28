@@ -4,7 +4,10 @@
   lib,
   ...
 }: {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ../common.nix
+  ];
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
@@ -18,11 +21,6 @@
     size = 4*1024;
   } ];
   networking.hostName = "nix-pi";
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-    fastfetch
-  ];
   services.openssh = {
     enable = true;
     settings.PermitRootLogin = "yes";

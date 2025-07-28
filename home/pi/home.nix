@@ -5,7 +5,14 @@ in {
 
   home.username = "pi";
   home.homeDirectory = "/home/pi";
-  home.packages = with pkgs; [ ripgrep fastfetch htop curl unzip file ];
+  home.packages = with pkgs; [
+    ripgrep
+    fastfetch
+    htop
+    curl
+    unzip
+    file
+  ];
 
   programs.git = {
     enable = true;

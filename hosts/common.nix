@@ -4,6 +4,12 @@
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [ vim wget ];
+  
+  programs.nh = {
+    enable = true;
+    flake = null;
+    clean.enable = true;
+  };
 
   time.timeZone = "Europe/Paris";
   i18n.defaultLocale = "fr_FR.UTF-8";

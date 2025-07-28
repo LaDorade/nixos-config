@@ -57,6 +57,7 @@ in {
   programs.bash.shellAliases = {
     ll = "ls -la";
     gs = "git status";
+    c = "clear";
   };
 
   home.sessionVariables = {

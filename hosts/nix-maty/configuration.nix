@@ -55,11 +55,6 @@ in {
     enable = true;
     extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
-  programs.nh = {
-    enable = true;
-    flake = null;
-    clean.enable = true;
-  };
   # Manager AMD gpu
   environment.systemPackages = with pkgs; [ lact ];
   systemd.packages = with pkgs; [ lact ];
