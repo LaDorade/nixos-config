@@ -46,7 +46,7 @@
               hostName = hostname;
             };
             modules = [
-              ./hosts/${hostname}/configuration.nix
+              ./hosts/nixos/${hostname}/configuration.nix
               home-manager.nixosModules.home-manager
               {
                 home-manager.useGlobalPkgs = true;
@@ -71,12 +71,12 @@
           hostname = "lenovo-laptop";
           username = "lenovo";
         };
-	"nix-pi" = mkNixosSystem {
-	  hostname = "nix-pi";
-	  username = "pi";
-	  system = "aarch64-linux";
-	  full = false;
-	};
+        "nix-pi" = mkNixosSystem {
+          hostname = "nix-pi";
+          username = "pi";
+          system = "aarch64-linux";
+          full = false;
+        };
       };
       darwinConfigurations = let
         mkDarwinSystem = { hostname, username, system ? "aarch64-darwin", enableHomebrew ? false }:
@@ -88,7 +88,7 @@
           hostName = hostname;
         };
         modules = [
-          ./darwin/${hostname}/configuration.nix
+          ./hosts/darwin/${hostname}/configuration.nix
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -97,8 +97,8 @@
             home-manager.backupFileExtension = "backup";
             home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
             home-manager.extraSpecialArgs = {
-          mainUser = username;
-          hostName = hostname;
+              mainUser = username;
+              hostName = hostname;
             };
           }
         ] ++ lib.optionals enableHomebrew [

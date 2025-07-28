@@ -2,7 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 { config, pkgs, ... }: {
-  imports = [ ./hardware-configuration.nix ../common.nix ../docker.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ../common.nix
+    ../modules/docker.nix
+  ];
   enableDocker = true;
 
   boot.loader.systemd-boot.enable = true;

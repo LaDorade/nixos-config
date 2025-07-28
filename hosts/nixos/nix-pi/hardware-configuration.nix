@@ -7,6 +7,19 @@
 {
   boot.kernelPackages = lib.mkDefault pkgs.linuxKernel.packages.linux_rpi3;
 
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/NIXOS_SD";
+      fsType = "ext4";
+      options = ["noatime"];
+    };
+  };
+  # zramSwap.enable = true;
+  swapDevices = [ {
+    device = "/var/lib/swapfile";
+    size = 4*1024;
+  } ];
+
   # fix the following error :
   # modprobe: FATAL: Module ahci not found in directory
   # https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-1350599022

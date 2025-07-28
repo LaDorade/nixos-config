@@ -13,6 +13,9 @@
       set -gx EDITOR nvim
       set -gx PATH $HOME/.local/bin $PATH
     '';
+    shellInitLast = ''
+      zoxide init fish | source
+    '';
 
     functions = {
       fish_prompt = builtins.readFile ./fish_prompt.fish;

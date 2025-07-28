@@ -8,18 +8,6 @@
     ./hardware-configuration.nix
     ../common.nix
   ];
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-label/NIXOS_SD";
-      fsType = "ext4";
-      options = ["noatime"];
-    };
-  };
-  # zramSwap.enable = true;
-  swapDevices = [ {
-    device = "/var/lib/swapfile";
-    size = 4*1024;
-  } ];
   networking.hostName = "nix-pi";
   services.openssh = {
     enable = true;
