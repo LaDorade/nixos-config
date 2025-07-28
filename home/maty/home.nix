@@ -3,7 +3,7 @@ let username = mainUser;
 in {
   imports = [
     ../../modules/dev.nix
-    ../../modules/shell.nix
+    ../../modules/fish
     ../../modules/alacritty.nix
     ../../modules/kitty.nix
     ../../modules/nixvim.nix

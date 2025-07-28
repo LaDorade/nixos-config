@@ -28,7 +28,7 @@
 
     nixvim = {
       url = "github:nix-community/nixvim/nixos-25.05";
-      #url = "github:nix-community/nixvim";        # If using a stable channel you can use `url = "github:nix-community/nixvim/nixos-<version>"`
+      #url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -72,49 +72,56 @@
           username = "lenovo";
         };
       };
-      darwinConfigurations = {
-        "mini-blg" = nix-darwin.lib.darwinSystem {
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./darwin/mini-blg/configuration.nix
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users."matysse_blg" =
-                import ./home/matysse_blg/home.nix;
-              home-manager.backupFileExtension = "backup";
-            }
-          ];
+      darwinConfigurations = let
+        mkDarwinSystem = { hostname, username, system ? "aarch64-darwin", enableHomebrew ? false }:
+          nix-darwin.lib.darwinSystem {
+        inherit system;
+        specialArgs = { 
+          inherit inputs lib;
+          mainUser = username;
+          hostName = hostname;
         };
-        "matypro" = nix-darwin.lib.darwinSystem {
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./darwin/matypro/configuration.nix
-            home-manager.darwinModules.home-manager
-            nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                user = "sakura";
-                enable = true;
-                # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
-                enableRosetta = true;
-                taps = {
-                  "homebrew/homebrew-core" = inputs.homebrew-core;
-                  "homebrew/homebrew-cask" = inputs.homebrew-cask;
-                  "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
-                };
-                mutableTaps = false;
-                autoMigrate = true;
+        modules = [
+          ./darwin/${hostname}/configuration.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${username} = import ./home/${username}/home.nix;
+            home-manager.backupFileExtension = "backup";
+            home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
+            home-manager.extraSpecialArgs = {
+          mainUser = username;
+          hostName = hostname;
+            };
+          }
+        ] ++ lib.optionals enableHomebrew [
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              user = username;
+              enable = true;
+              enableRosetta = true;
+              taps = {
+                "homebrew/homebrew-core" = inputs.homebrew-core;
+                "homebrew/homebrew-cask" = inputs.homebrew-cask;
+                "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
               };
-            }
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users."sakura" = import ./home/sakura/home.nix;
-              home-manager.backupFileExtension = "backup";
-            }
-          ];
+              mutableTaps = false;
+              autoMigrate = true;
+            };
+          }
+        ];
+          };
+      in {
+        "mini-blg" = mkDarwinSystem {
+          hostname = "mini-blg";
+          username = "matysse_blg";
+        };
+        "matypro" = mkDarwinSystem {
+          hostname = "matypro";
+          username = "sakura";
+          enableHomebrew = true;
         };
       };
     };

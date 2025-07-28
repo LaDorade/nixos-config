@@ -3,7 +3,7 @@ let
 in {
   imports = [
     ../../modules/kitty.nix
-    ../../modules/shell.nix
+    ../../modules/fish
   ];
   home.packages = with pkgs; [
     neovim

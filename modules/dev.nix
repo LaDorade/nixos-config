@@ -2,6 +2,16 @@
 let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.devEnvs;
+
+  commonPackages = with pkgs; [
+  ];
+  rustPackages = with pkgs; [
+    rustup
+  ];
+  nodePackages = with pkgs; [
+    nodejs_24
+    yarn
+  ];
 in {
   options.devEnvs = {
     enable = mkEnableOption "Global dev env";
@@ -11,13 +21,9 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs;
-      mkIf cfg.rustEnv.enable [
-        rustup # provides rustc, cargo, rust-analyzer and more
-      ];
-    # todo implement js env
-    #++ mkIf cfg.jsEnv.enable [
-    #  nodejs_24 # provides node, npm, npx
-    #  yarn
-    #];
+      commonPackages
+      ++ lib.optionals cfg.rustEnv.enable rustPackages
+      ++ lib.optionals cfg.jsEnv.enable nodePackages
+    ;
   };
 }

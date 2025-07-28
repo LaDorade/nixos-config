@@ -3,6 +3,8 @@
     enable = true;
 
     shellAliases = {
+      c = "clear";
+      h = "history";
       ll = "ls -alh";
       gs = "git status";
     };
@@ -13,8 +15,8 @@
     '';
 
     functions = {
-      fish_prompt = builtins.readFile ./fish/fish_prompt.fish;
-      fish_greeting = builtins.readFile ./fish/fish_greeting.fish;
+      fish_prompt = builtins.readFile ./fish_prompt.fish;
+      fish_greeting = builtins.readFile ./fish_greeting.fish;
     };
   };
 }

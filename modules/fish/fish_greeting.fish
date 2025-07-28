@@ -20,30 +20,29 @@
 #     and echo $fish_greeting
 # end
 
-
 # function fish_greeting
-    # Salutations maritimes
-    set -l greetings \
-        "🌊 Ahoy, sailor! The shell seas are calm today." \
-        "⚓ Welcome aboard, matey! Chart your course with confidence." \
-        "🐚 The tide is right for shell commands. Let's dive in!" \
-        "🦑 Ready your gear — deep shell diving begins now." \
-        "🚢 Full speed ahead, captain! May your commands be swift." \
-        "🧭 You've entered uncharted waters. Type wisely!" \
-        "🐠 Fish reporting for duty. Let’s make waves in the terminal." \
-        "🪝 Hook your next command — the ocean is full of possibilities."
+# Salutations maritimes
+set -l greetings \
+    "🌊 Ahoy, sailor! The shell seas are calm today." \
+    "⚓ Welcome aboard, matey! Chart your course with confidence." \
+    "🐚 The tide is right for shell commands. Let's dive in!" \
+    "🦑 Ready your gear — deep shell diving begins now." \
+    "🚢 Full speed ahead, captain! May your commands be swift." \
+    "🧭 You've entered uncharted waters. Type wisely!" \
+    "🐠 Fish reporting for duty. Let’s make waves in the terminal." \
+    "🪝 Hook your next command — the ocean is full of possibilities."
 
-    # Choisir un message aléatoire
-    set -l random_index (math (random) % (count $greetings) + 1)
-    set -l line1 $greetings[$random_index]
+# Choisir un message aléatoire
+set -l random_index (math (random) % (count $greetings) + 1)
+set -l line1 $greetings[$random_index]
 
-    # Message d’aide
-    set -l line2 \n(printf 'Type %shelp%s to consult the captain’s log.' (set_color cyan) (set_color normal))
+# Message d’aide
+set -l line2 \n(printf 'Type %shelp%s to consult the captain’s log.' (set_color cyan) (set_color normal))
 
-    # Mode privé
-    set -l private_msg ""
-    if set -q fish_private_mode
-        set private_msg \n(set_color yellow)"🔒 Sailing incognito: history will not be logged in this voyage."(set_color normal)
-    end
+# Mode privé
+set -l private_msg ""
+if set -q fish_private_mode
+    set private_msg \n(set_color yellow)"🔒 Sailing incognito: history will not be logged in this voyage."(set_color normal)
+end
 
-    echo $line1$line2$private_msg
+echo $line1$line2$private_msg

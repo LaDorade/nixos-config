@@ -6,6 +6,13 @@
 nixfmt ./**/*
 ```
 
+## Check si tout est bon
+
+```sh
+nix flake check
+# TODO : en faire un hook de precommit
+```
+
 ## NixOS
 
 ## Nix-Darwin
