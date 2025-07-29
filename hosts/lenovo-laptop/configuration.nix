@@ -13,8 +13,32 @@
   ];
   enableDocker = true;
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  environment.systemPackages = [
+    pkgs.minimal-grub-theme
+    pkgs.plymouth-blahaj-theme
+  ];
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
+  boot.plymouth = {
+      enable = true;
+      theme = "blahaj";
+      themePackages = [ pkgs.plymouth-blahaj-theme ];
+    };
+ 
+  boot.loader = {
+    timeout = 20;
+    efi.efiSysMountPoint = "/boot";
+
+   grub = {
+      enable = true;
+      theme = "${pkgs.minimal-grub-theme}";
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+      devices = ["nodev"];
+      useOSProber = true;
+      # extraEntriesBeforeNixOs = false;
+    };
+  };
 
   networking.hostName = "lenovo-laptop";
 
