@@ -3,6 +3,7 @@
     enable = true;
 
     shellAliases = {
+      cd = "z";
       c = "clear";
       h = "history";
       ll = "ls -alh";

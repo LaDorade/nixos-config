@@ -9,6 +9,7 @@
 
     nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    mac-app-util.url = "github:hraban/mac-app-util";
     # Nix-Homebrew simply installs Homebrew
     nix-homebrew = { url = "github:zhaofengli-wip/nix-homebrew"; };
     homebrew-bundle = {
@@ -31,107 +32,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-darwin, nixvim, nix-homebrew, ...
-    }@inputs:
-    let lib = nixpkgs.lib;
-    in {
-      nixosConfigurations = let
-        mkNixosSystem =
-          { hostname, username, system ? "x86_64-linux", full ? true }:
-          lib.nixosSystem {
-            inherit system;
-            specialArgs = {
-              inherit inputs lib;
-              mainUser = username;
-              hostName = hostname;
-            };
-            modules = [
-              ./hosts/nixos/${hostname}/configuration.nix
-              home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.users.${username} =
-                  import ./home/${username}/home.nix;
-                home-manager.backupFileExtension = "backup";
-                home-manager.sharedModules = [ ]
-                  ++ lib.optionals full [ nixvim.homeModules.nixvim ];
-                home-manager.extraSpecialArgs = {
-                  mainUser = username;
-                  hostName = hostname;
-                };
-              }
-            ];
-          };
-      in {
-        "nix-maty" = mkNixosSystem {
-          hostname = "nix-maty";
-          username = "maty";
-        };
-        "lenovo-laptop" = mkNixosSystem {
-          hostname = "lenovo-laptop";
-          username = "lenovo";
-        };
-        "nix-pi" = mkNixosSystem {
-          hostname = "nix-pi";
-          username = "pi";
-          system = "aarch64-linux";
-          full = false;
-        };
-      };
-      darwinConfigurations = let
-        mkDarwinSystem = { hostname, username, system ? "aarch64-darwin"
-          , enableHomebrew ? false }:
-          nix-darwin.lib.darwinSystem {
-            inherit system;
-            specialArgs = {
-              inherit inputs lib;
-              mainUser = username;
-              hostName = hostname;
-            };
-            modules = [
-              ./hosts/darwin/${hostname}/configuration.nix
-              home-manager.darwinModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.users.${username} =
-                  import ./home/${username}/home.nix;
-                home-manager.backupFileExtension = "backup";
-                home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
-                home-manager.extraSpecialArgs = {
-                  mainUser = username;
-                  hostName = hostname;
-                };
-              }
-            ] ++ lib.optionals enableHomebrew [
-              nix-homebrew.darwinModules.nix-homebrew
-              {
-                nix-homebrew = {
-                  user = username;
-                  enable = true;
-                  enableRosetta = true;
-                  taps = {
-                    "homebrew/homebrew-core" = inputs.homebrew-core;
-                    "homebrew/homebrew-cask" = inputs.homebrew-cask;
-                    "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
-                  };
-                  mutableTaps = false;
-                  autoMigrate = true;
-                };
-              }
-            ];
-          };
-      in {
-        "mini-blg" = mkDarwinSystem {
-          hostname = "mini-blg";
-          username = "matysse_blg";
-        };
-        "matypro" = mkDarwinSystem {
-          hostname = "matypro";
-          username = "sakura";
-          enableHomebrew = true;
-        };
-      };
-    };
+  outputs = { self, nixpkgs, ... }@inputs:
+    let 
+      lib = nixpkgs.lib;
+      
+      # Import des modules de configuration
+      darwinModule = import ./flake-darwin.nix { inherit inputs lib; };
+      nixosModule = import ./flake-nixos.nix { inherit inputs lib; };
+    in 
+      # Merge des configurations Darwin et NixOS
+      darwinModule // nixosModule;
 }
