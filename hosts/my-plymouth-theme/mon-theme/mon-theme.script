@@ -1,0 +1,35 @@
+# Définir la taille de l'écran
+screen_width = Window.GetWidth();
+screen_height = Window.GetHeight();
+
+# Charger une image
+logo_image = Image("Illustration_sans_titre-1.png");
+
+nframes = 17;
+for (i = 1; i <= nframes; i++)
+ imgs[i] = Image("Illustration_sans_titre-" + i + ".png");
+
+# Calculer position centrée
+image_width = logo_image.GetWidth();
+image_height = logo_image.GetHeight();
+
+logo_x = (screen_width - image_width) / 2;
+logo_y = (screen_height - image_height) / 2;
+
+# Afficher l'image
+logo_sprite = Sprite(logo_image);
+logo_sprite.SetPosition(logo_x, logo_y);
+logo_sprite.SetImage(imgs[15]);
+
+frame = 0;
+time = 0;
+
+fun refresh_callback ()
+{
+ if ((time % 10) == 0) {
+   logo_sprite.SetImage(imgs[frame%17]);
+   frame++;
+ }
+ time++;
+}
+Plymouth.SetRefreshFunction (refresh_callback);
