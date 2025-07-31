@@ -5,7 +5,7 @@ in {
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../common.nix
-    ../sddm.nix
+    ../modules/sddm.nix
   ];
 
   # Bootloader.

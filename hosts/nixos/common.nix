@@ -1,4 +1,8 @@
 { config, pkgs, ... }: {
+  imports = [
+    ../base.nix
+  ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   networking.networkmanager.enable = true;
 

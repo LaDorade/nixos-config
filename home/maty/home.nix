@@ -2,6 +2,7 @@
 let username = mainUser;
 in {
   imports = [
+    ../common.nix
     ../modules/dev.nix
     ../modules/fish
     ../modules/alacritty.nix
