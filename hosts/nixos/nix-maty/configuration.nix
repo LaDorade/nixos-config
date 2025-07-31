@@ -5,6 +5,7 @@ in {
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../common.nix
+    ../sddm.nix
   ];
 
   # Bootloader.
@@ -30,7 +31,10 @@ in {
   networking.hostName = "nix-maty"; # Define your hostname.
 
   services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    theme = "${pkgs.where-is-my-sddm-theme}/share/sddm/themes/where_is_my_sddm_theme";
+  };
   services.desktopManager.plasma6.enable = true;
 
   services.printing.enable = true;
