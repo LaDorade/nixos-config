@@ -1,0 +1,9 @@
+[Plymouth Theme]
+Name=mon-theme
+Description=Thème personnalisé de démarrage
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/mon-theme
+ScriptFile=/usr/share/plymouth/themes/mon-theme/mon-theme.script
+
