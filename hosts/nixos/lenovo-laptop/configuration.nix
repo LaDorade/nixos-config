@@ -7,12 +7,12 @@
   lib,
   ...
 }: let
-  monTheme = import ../my-plymouth-theme { inherit pkgs lib ; };
+  fflorent = import ../modules/fflorent { inherit pkgs lib ; };
 in{
   imports = [
     ./hardware-configuration.nix
     ../common.nix
-    ../docker.nix
+    ../modules/docker.nix
   ];
  enableDocker = true;
 
@@ -23,8 +23,8 @@ in{
   # boot.loader.efi.canTouchEfiVariables = true;
   boot.plymouth = {
       enable = true;
-      theme = "mon-theme";
-      themePackages = [ pkgs.plymouth-blahaj-theme monTheme ];
+      theme = "fflorent";
+      themePackages = [ pkgs.plymouth-blahaj-theme fflorent ];
     };
  
   boot.loader = {
