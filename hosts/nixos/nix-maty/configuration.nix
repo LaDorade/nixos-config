@@ -1,16 +1,11 @@
-{
-  config,
-  pkgs,
-  mainUser,
-  ...
-}:let 
-  username = mainUser;
-in{
+{ config, pkgs, mainUser, ... }:
+let username = mainUser;
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../common.nix
-    ../../modules/shell.nix
+    ../sddm.nix
   ];
 
   # Bootloader.
@@ -30,15 +25,16 @@ in{
     "d /mnt/steamgames 0770 root gamer - -"
   ];
 
-  hardware.graphics = {
-    enable = true;
-  };
-  services.xserver.videoDrivers = ["amdgpu"];
+  hardware.graphics = { enable = true; };
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   networking.hostName = "nix-maty"; # Define your hostname.
 
   services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    theme = "${pkgs.where-is-my-sddm-theme}/share/sddm/themes/where_is_my_sddm_theme";
+  };
   services.desktopManager.plasma6.enable = true;
 
   services.printing.enable = true;
@@ -51,26 +47,23 @@ in{
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-  users.groups.gamer = {};
+  users.groups.gamer = { };
   users.users.${username} = {
     isNormalUser = true;
-    description = username; 
-    extraGroups = ["networkmanager" "wheel" "gamer"];
-    packages = with pkgs; [
-    ];
+    description = username;
+    extraGroups = [ "networkmanager" "wheel" "gamer" ];
+    packages = with pkgs; [ ];
   };
   programs.firefox.enable = true;
   programs.steam = {
     enable = true;
-    extraCompatPackages = [
-      pkgs.proton-ge-bin
-    ];
+    extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
-  programs.nh = {
-    enable = true;
-    flake = null;
-    clean.enable = true;
-  };
+  # Manager AMD gpu
+  environment.systemPackages = with pkgs; [ lact ];
+  systemd.packages = with pkgs; [ lact ];
+  systemd.services.lactd.wantedBy = [ "multi-user.target" ];
+
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
 }

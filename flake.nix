@@ -3,57 +3,43 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
-    home-manager.url = "github:nix-community/home-manager";
+
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Optionnel : pour formatter
-    nixpkgs-fmt.url = "github:nix-community/nixpkgs-fmt";
-  };
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    mac-app-util.url = "github:hraban/mac-app-util";
+    # Nix-Homebrew simply installs Homebrew
+    nix-homebrew = { url = "github:zhaofengli-wip/nix-homebrew"; };
+    homebrew-bundle = {
+      url = "github:homebrew/homebrew-bundle";
+      flake = false;
+    };
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    ...
-  } @ inputs: let
-    lib = nixpkgs.lib;
-  in {
-    nixosConfigurations = let
-      mkNixosSystem = {
-        hostname,
-        username,
-        system ? "x86_64-linux",
-      }:
-        lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-	    inherit inputs lib;
-	    mainUser = username;
-	    hostName = hostname;
-	  };
-          modules = [
-            ./hosts/${hostname}/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.users.${username} = import ./home/${username}/home.nix;
-              home-manager.backupFileExtension = "backup";
-	      home-manager.extraSpecialArgs = {
-	        mainUser = username;
-	        hostName = hostname;
-	      };
-            }
-          ];
-        };
-    in {
-      "nix-maty" = mkNixosSystem {
-        hostname = "nix-maty";
-        username = "maty";
-      };
-      "lenovo-laptop" = mkNixosSystem {
-        hostname = "lenovo-laptop";
-        username = "lenovo";
-      };
+    nixvim = {
+      url = "github:nix-community/nixvim/nixos-25.05";
+      #url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
+  outputs = { self, nixpkgs, ... }@inputs:
+    let 
+      lib = nixpkgs.lib;
+      
+      # Import des modules de configuration
+      darwinModule = import ./flake-darwin.nix { inherit inputs lib; };
+      nixosModule = import ./flake-nixos.nix { inherit inputs lib; };
+    in 
+      # Merge des configurations Darwin et NixOS
+      darwinModule // nixosModule;
 }

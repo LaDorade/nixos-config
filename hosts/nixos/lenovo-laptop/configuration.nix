@@ -14,7 +14,7 @@ in{
     ../common.nix
     ../docker.nix
   ];
-  enableDocker = true;
+ enableDocker = true;
 
   environment.systemPackages = [
     pkgs.minimal-grub-theme
@@ -61,8 +61,8 @@ in{
   users.users.lenovo = {
     isNormalUser = true;
     description = "lenovo";
-    extraGroups = ["networkmanager" "wheel"];
-    packages = with pkgs; [];
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [ ];
   };
 
   services.openssh.enable = true;
