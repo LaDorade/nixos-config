@@ -5,9 +5,10 @@
 
   homebrew = {
     enable = true;
-    onActivation.cleanup = "uninstall";
-
-    brews = [ ];
     casks = [ "bruno" ];
+    brews = [ ];
+
+    # Clean uninstalls casks and brews but send an error message
+    onActivation.cleanup = "zap";
   };
 }

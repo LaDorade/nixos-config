@@ -14,6 +14,7 @@ in {
     enable = true; # Enable global dev environment
     phpEnv.enable = true; # Enable PHP dev environment
     nodeEnv.enable = true; # Enable Node.js dev environment
+    rustEnv.enable = true;
   };
 
   # Version de la config, doit rester constante après première install

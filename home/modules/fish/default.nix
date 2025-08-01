@@ -3,6 +3,7 @@
     enable = true;
 
     shellAliases = {
+      j= "just";
       cd = "z";
       c = "clear";
       h = "history";
