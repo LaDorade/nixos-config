@@ -12,7 +12,7 @@
     clean.enable = true;
   };
 
-  home.packages = with pkgs; [ ripgrep fastfetch htop ];
+  home.packages = with pkgs; [ ripgrep fzf fastfetch htop ];
 
   programs.zoxide = { enable = true; };
 

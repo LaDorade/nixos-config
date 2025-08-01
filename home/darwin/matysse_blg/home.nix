@@ -5,7 +5,6 @@ in {
     ../common.nix
     ../../modules/fish
     ../../modules/kitty.nix
-    ../../modules/utils.nix
     ../../modules/vscode.nix
     ../../modules/dev.nix
   ];
