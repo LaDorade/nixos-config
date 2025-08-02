@@ -2,7 +2,7 @@
 { inputs, lib, ... }:
 
 let
-  mkNixosSystem = { hostname, username, system ? "x86_64-linux", full ? true }:
+  mkNixosSystem = { hostname, username, system ? "x86_64-linux" }:
     lib.nixosSystem {
       inherit system;
       specialArgs = {
@@ -19,8 +19,7 @@ let
           home-manager.users.${username} =
             import ./home/${username}/home.nix;
           home-manager.backupFileExtension = "backup";
-          home-manager.sharedModules = [ ]
-            ++ lib.optionals full [ inputs.nixvim.homeModules.nixvim ];
+          home-manager.sharedModules = [ inputs.nixvim.homeModules.nixvim ];
           home-manager.extraSpecialArgs = {
             mainUser = username;
             hostName = hostname;
@@ -43,7 +42,6 @@ in
       hostname = "nix-pi";
       username = "pi";
       system = "aarch64-linux";
-      full = false;
     };
   };
 }

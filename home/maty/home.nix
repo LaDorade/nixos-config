@@ -7,8 +7,8 @@ in {
     ../modules/fish
     ../modules/alacritty.nix
     ../modules/kitty.nix
-    ../modules/nixvim.nix
   ];
+  nixvim.enable = true;
   devEnvs.enable = true;
   devEnvs.rustEnv.enable = true;
 

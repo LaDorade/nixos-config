@@ -4,7 +4,7 @@ let
   cfg = config.devEnvs;
 
   commonPackages = with pkgs; [ ];
-  rustPackages = with pkgs; [ rustup ];
+  rustPackages = with pkgs; [ rustc cargo rust-analyzer rustfmt ];
   phpPackages = with pkgs; [ php php84Packages.composer ];
   nodePackages = with pkgs; [ nodejs_24 yarn ]; # Node contains npm, npx
 in {

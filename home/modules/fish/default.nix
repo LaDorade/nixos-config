@@ -2,7 +2,17 @@
   programs.fish = {
     enable = true;
 
+    plugins = [
+      {
+        name = "plugin-git";
+        src = pkgs.fishPlugins.plugin-git.src;
+      }
+    ];
+    shellAbbrs = {
+      f= "$EDITOR \"$(fzf)\"";
+    };
     shellAliases = {
+      j= "just";
       cd = "z";
       c = "clear";
       h = "history";
