@@ -1,15 +1,14 @@
 {pkgs, lib, ...}:
 pkgs.stdenv.mkDerivation rec {
-  pname = "mon-theme";
+  pname = "fflorent";
   version = "1.2.3";
 
   src = pkgs.fetchFromGitHub {
     owner = "KoroSensei10";
     repo = "fflorent";
     rev = "c0a02f161069085516d0e11a3eccdb0a6af0eae9";
+    hash = "sha256-3iwIOtj3ca892CujBD9HAZsiuA/i+STipuos+BMgYnk=";
   };
-
-  # nativeBuildInputs = [ plymouth ];
 
   installPhase = ''
     mkdir -p $out/share/plymouth/themes/fflorent
