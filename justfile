@@ -6,5 +6,6 @@ type := if os() == "macos" { 'darwin' } else { 'os' }
 check:
     nix flake check
 
+# exemple: just n test -a
 nix *cmd='switch':
     nh {{ type }} {{ cmd }} .

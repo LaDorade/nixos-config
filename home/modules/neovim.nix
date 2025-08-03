@@ -20,7 +20,7 @@
         treesitter = {
           enable = true;
           settings = {
-            ensure_installed = [ "lua" "python" "rust" "nix" "bash" "json" ];
+            ensure_installed = [ "lua" "python" "rust" "nix" "json" ];
             highlight = {
               enable = true;
               # additionalVimRegexHighlighting = false;
