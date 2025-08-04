@@ -38,6 +38,10 @@ in
       hostname = "lenovo-laptop";
       username = "lenovo";
     };
+    "acer-laptop" = mkNixosSystem {
+      hostname = "acer-laptop";
+      username = "acer";
+    };
     "nix-pi" = mkNixosSystem {
       hostname = "nix-pi";
       username = "pi";
