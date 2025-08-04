@@ -14,7 +14,13 @@ in{
     ./hardware-configuration.nix
     ../common.nix
     ../modules/docker.nix
+    ../modules/gui/DEs.nix
   ];
+
+  de = {
+    enable = true;
+    xfce.enable = true;
+  };
 
   environment.systemPackages = [
     pkgs.minimal-grub-theme
@@ -44,20 +50,10 @@ in{
 
   networking.hostName = hostName;
 
-  # GUI
-  services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
+  programs.firefox.enable = true;
 
   services.printing.enable = true;
-  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
   users.users.acer = {
     isNormalUser = true;
     description = "acer";
