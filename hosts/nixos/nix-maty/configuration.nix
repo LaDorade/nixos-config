@@ -47,20 +47,35 @@ in {
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+  # Don't know if I need fish systemwide to have all completions
+  # based on the documentation: yes it needs it (https://nixos.wiki/wiki/Fish)
+  programs.fish.enable = true;
   users.groups.gamer = { };
   users.users.${username} = {
     isNormalUser = true;
     description = username;
     extraGroups = [ "networkmanager" "wheel" "gamer" ];
     packages = with pkgs; [ ];
+    shell = pkgs.fish;
   };
   programs.firefox.enable = true;
   programs.steam = {
     enable = true;
     extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
+  # TODO: Merge with fish config, create a "shell" config for every machines
+  # I think just using shell by user bypass this
+  # programs.bash.interactiveShellInit = ''
+  # if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+  #   then
+  #     shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+  #     exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+  #   fi
+  # '';
   # Manager AMD gpu
-  environment.systemPackages = with pkgs; [ lact ];
+  environment.systemPackages = with pkgs; [ 
+    lact
+  ];
   systemd.packages = with pkgs; [ lact ];
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
 

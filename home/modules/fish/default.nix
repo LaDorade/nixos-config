@@ -1,18 +1,24 @@
 { pkgs, ... }: {
+  home.packages = with pkgs; [
+    bat
+    fd
+  ];
+  # TODO: Manage fish system-wide to avoid split config, more easely set
+  # packages dependencies, and have fish as pseudo default shell (+ nix-shell)
   programs.fish = {
     enable = true;
 
-    plugins = [
-      {
-        name = "plugin-git";
-        src = pkgs.fishPlugins.plugin-git.src;
-      }
+    plugins = with pkgs.fishPlugins; [
+      {name = "fzf-fish"; src = fzf-fish.src;} # needs fzf, bat, fd
+      {name = "plugin-git"; src = plugin-git.src;}
     ];
     shellAbbrs = {
       f= "$EDITOR \"$(fzf)\"";
+      "nix-shell" = "nix-shell --run $SHELL";
+      "nixshell" = "nix shell -c $SHELL";
+      j= "just";
     };
     shellAliases = {
-      j= "just";
       cd = "z";
       c = "clear";
       h = "history";
