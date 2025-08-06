@@ -13,9 +13,11 @@ in{
   imports = [
     ./hardware-configuration.nix
     ../common.nix
-    ../modules/docker.nix
     ../modules/gui/DEs.nix
+    ../modules/paperless-ngx.nix
   ];
+
+  paperless.enable = true;
 
   de = {
     enable = true;

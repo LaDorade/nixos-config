@@ -23,8 +23,8 @@ in{
     services.xserver.desktopManager.xfce.enable = cfg.xfce.enable;
 
     # KDE Plasma
-    services.xserver.displayManager.sddm.enable = cfg.plasma.enable;
-    services.xserver.desktopManager.plasma6.enable = cfg.plasma.enable;
+    services.displayManager.sddm.enable = cfg.plasma.enable;
+    services.desktopManager.plasma6.enable = cfg.plasma.enable;
 
 
     # Audio
