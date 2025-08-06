@@ -18,6 +18,7 @@ in{
   ];
 
   paperless.enable = true;
+  services.paperless.address = "0.0.0.0";
 
   de = {
     enable = true;
@@ -63,6 +64,10 @@ in{
     packages = with pkgs; [ ];
   };
 
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 80 443 28981 ];
+  };
   services.openssh.enable = true;
   system.stateVersion = "25.05"; # Did you read the comment?
 }
