@@ -30,6 +30,12 @@
       #url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      # IMPORTANT: we're using "libgbm" and is only available in unstable so ensure
+      # to have it up-to-date or simply don't specify the nixpkgs input
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
@@ -37,8 +43,8 @@
       lib = nixpkgs.lib;
       
       # Import des modules de configuration
-      darwinModule = import ./flake-darwin.nix { inherit inputs lib; };
-      nixosModule = import ./flake-nixos.nix { inherit inputs lib; };
+      darwinModule = import ./darwin-flake.nix { inherit inputs lib; };
+      nixosModule = import ./nixos-flake.nix { inherit inputs lib; };
     in 
       # Merge des configurations Darwin et NixOS
       darwinModule // nixosModule;
