@@ -1,6 +1,6 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, mainUser, hostName, ... }: {
   imports = [ ./hardware-configuration.nix ../common.nix ];
-  networking.hostName = "nix-pi";
+  networking.hostName = hostName;
   services.openssh = {
     enable = true;
     settings.PermitRootLogin = "yes";
@@ -85,9 +85,8 @@
     allowedTCPPorts = [ 80 443 8080 ];
   };
 
-  users.users.pi = {
+  users.users.${mainUser} = {
     isNormalUser = true;
-    password = "pi";
     extraGroups = [ "wheel" "networkmanager" ];
   };
 
