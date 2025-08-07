@@ -6,43 +6,83 @@
     settings.PermitRootLogin = "yes";
   };
   services.fail2ban.enable = true;
-  services.nginx = {
+  services.homer = {
     enable = true;
+    settings = {
+      title = "bijour";
+      services = [
+        {
+	  name = "My beloved one's";
+	  icon = "fas fa-heartbeat";
+	  items = [
+	    {
+	      name = "Paperless";
+	      type = "PaperlessNG";
+	      icon = "fas fa-code-branch";
+	      apikey = "6ad4ce9bb0ab3634e204c59d18f965d8e3449421";
+	      tag = "app";
+	      keywords = "self hosted papers";
+	      url = "https://papers.canard.cc/";
+	      target = "_blank";
+	    }
+          ];
+	}
+      ];
+    };
+    virtualHost = {
+      domain = "home.canard.cc";
+      nginx.enable = true;
+    };
+  };
+  services.nginx = {
+    # enable = true; # Homer enables it
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
-
-    # other Nginx options
     virtualHosts."home.canard.cc" = {
       enableACME = true;
       forceSSL = true;
-      root = "/var/www/home";
-      #locations."/" = {
-      #proxyPass = "http://127.0.0.1:12345";
-      #proxyWebsockets = true; # needed if you need to use WebSocket
-      #extraConfig =
-      # required when the target is also TLS server with multiple hosts
-      #"proxy_ssl_server_name on;" +
-      # required when the server wants to use HTTP Authentication
-      #"proxy_pass_header Authorization;"
-      #;
-      #};
     };
+   virtualHosts."papers.canard.cc" = let 
+     address = "http://192.168.1.110:28981";
+   in{
+     enableACME = true;
+     forceSSL = true;
+     locations."/" = {
+       proxyPass = address;
+       proxyWebsockets = true;
+	  #     extraConfig = ''
+	  #        # Copied from https://github.com/paperless-ngx/paperless-ngx/wiki/Using-a-Reverse-Proxy-with-Paperless-ngx#nginx
+	  #        # add_header Referrer-Policy "strict-origin-when-cross-origin";
+	  # add_header 'Access-Control-Allow-Origin' '*' always;
+	  #    '';
+     };
+      # locations."~ ^/api/" = {
+      #   proxyPass = address;
+      #   extraConfig = ''
+      #     # CORS Headers
+      #     add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE' always;
+      #     add_header 'Access-Control-Allow-Headers' 'Origin, Content-Type, Accept, Authorization' always;
+      #     add_header 'Access-Control-Allow-Credentials' 'true' always;
+      #
+      #     # Handle preflight requests
+      #     if ($request_method = 'OPTIONS') {
+      #         add_header 'Access-Control-Max-Age' 86400;
+      #         add_header 'Content-Length' 0;
+      #         add_header 'Content-Type' 'text/plain charset=UTF-8';
+      #         return 204;
+      #     }
+      #   '';
+      # };
+   };
   };
   security.acme.acceptTerms = true;
-  security.acme.certs = { "home.canard.cc".email = "youremail@address.com"; };
+  security.acme.certs = { 
+    "home.canard.cc".email = "mathisjung02@gmail.com";
+    "papers.canard.cc".email = "mathisjung02@gmail.com";
+  };
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ 80 443 8080 ];
-    allowedUDPPortRanges = [
-      {
-        from = 4000;
-        to = 4007;
-      }
-      {
-        from = 8000;
-        to = 8010;
-      }
-    ];
   };
 
   users.users.pi = {
