@@ -1,4 +1,4 @@
-{ config, pkgs, mainUser, ... }:
+{ config, pkgs, inputs, mainUser, system, hostName, ... }:
 let username = mainUser;
 in {
   imports = [
@@ -6,7 +6,15 @@ in {
     ./hardware-configuration.nix
     ../common.nix
     ../modules/sddm.nix
+    ../modules/gui/DEs.nix
   ];
+  de = {
+    enable = true;
+    plasma.enable = true;
+  };
+  services.displayManager.sddm = {
+    theme = "${pkgs.where-is-my-sddm-theme}/share/sddm/themes/where_is_my_sddm_theme";
+  };
 
   # Bootloader.
   boot = {
@@ -28,25 +36,8 @@ in {
   hardware.graphics = { enable = true; };
   services.xserver.videoDrivers = [ "amdgpu" ];
 
-  networking.hostName = "nix-maty"; # Define your hostname.
-
-  services.xserver.enable = true;
-  services.displayManager.sddm = {
-    enable = true;
-    theme = "${pkgs.where-is-my-sddm-theme}/share/sddm/themes/where_is_my_sddm_theme";
-  };
-  services.desktopManager.plasma6.enable = true;
-
+  networking.hostName = hostName; # Define your hostname.
   services.printing.enable = true;
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
   # Don't know if I need fish systemwide to have all completions
   # based on the documentation: yes it needs it (https://nixos.wiki/wiki/Fish)
   programs.fish.enable = true;
@@ -63,17 +54,9 @@ in {
     enable = true;
     extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
-  # TODO: Merge with fish config, create a "shell" config for every machines
-  # I think just using shell by user bypass this
-  # programs.bash.interactiveShellInit = ''
-  # if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-  #   then
-  #     shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-  #     exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
-  #   fi
-  # '';
   # Manager AMD gpu
   environment.systemPackages = with pkgs; [ 
+    inputs.zen-browser.packages."${system}".twilight
     lact
   ];
   systemd.packages = with pkgs; [ lact ];

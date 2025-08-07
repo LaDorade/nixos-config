@@ -66,7 +66,7 @@ in{
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 28981 ];
+    allowedTCPPorts = [ 80 443 28981 8080 ];
   };
   services.openssh.enable = true;
   system.stateVersion = "25.05"; # Did you read the comment?
