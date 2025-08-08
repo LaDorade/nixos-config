@@ -6,12 +6,12 @@ let
     lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit inputs lib;
+        inherit inputs lib system;
         mainUser = username;
         hostName = hostname;
       };
       modules = [
-        ./hosts/nixos/${hostname}/configuration.nix
+        ./configs/nixos/${hostname}/configuration.nix
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -30,8 +30,8 @@ let
 in
 {
   nixosConfigurations = {
-    "nix-maty" = mkNixosSystem {
-      hostname = "nix-maty";
+    "maty" = mkNixosSystem {
+      hostname = "maty";
       username = "maty";
     };
     "lenovo-laptop" = mkNixosSystem {
@@ -42,8 +42,8 @@ in
       hostname = "acer-laptop";
       username = "acer";
     };
-    "nix-pi" = mkNixosSystem {
-      hostname = "nix-pi";
+    "pi" = mkNixosSystem {
+      hostname = "pi";
       username = "pi";
       system = "aarch64-linux";
     };

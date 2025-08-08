@@ -1,5 +1,13 @@
 # NixOS Config!
 
+## Just
+
+```just
+just # check la flake
+just nix # switch la config (autodetect darwin ou nixos)
+just n test -a # custom arguements
+```
+
 ## Formatte les fichiers
 
 ```sh
