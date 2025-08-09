@@ -50,29 +50,22 @@
      locations."/" = {
        proxyPass = address;
        proxyWebsockets = true;
-	  #     extraConfig = ''
-	  #        # Copied from https://github.com/paperless-ngx/paperless-ngx/wiki/Using-a-Reverse-Proxy-with-Paperless-ngx#nginx
-	  #        # add_header Referrer-Policy "strict-origin-when-cross-origin";
-	  # add_header 'Access-Control-Allow-Origin' '*' always;
-	  #    '';
+       extraConfig = ''
+          # CORS Headers
+          add_header 'Access-Control-Allow-Origin' 'https://home.canard.cc' always;
+          add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE' always;
+          add_header 'Access-Control-Allow-Headers' 'Origin, Content-Type, Accept, Authorization' always;
+          add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+          # Préflight OPTIONS
+          if ($request_method = 'OPTIONS') {
+              # add_header 'Access-Control-Max-Age' 86400;
+              # add_header 'Content-Length' 0;
+              # add_header 'Content-Type' 'text/plain charset=UTF-8';
+              return 204;
+          }
+        '';
      };
-      # locations."~ ^/api/" = {
-      #   proxyPass = address;
-      #   extraConfig = ''
-      #     # CORS Headers
-      #     add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE' always;
-      #     add_header 'Access-Control-Allow-Headers' 'Origin, Content-Type, Accept, Authorization' always;
-      #     add_header 'Access-Control-Allow-Credentials' 'true' always;
-      #
-      #     # Handle preflight requests
-      #     if ($request_method = 'OPTIONS') {
-      #         add_header 'Access-Control-Max-Age' 86400;
-      #         add_header 'Content-Length' 0;
-      #         add_header 'Content-Type' 'text/plain charset=UTF-8';
-      #         return 204;
-      #     }
-      #   '';
-      # };
    };
   };
   security.acme.acceptTerms = true;

@@ -8,7 +8,7 @@ in {
       type = with lib.types; uniq str;
       description = "worldwide url";
       example = "https://snoup.fr";
-      default = "https://canard.cc";
+      default = "https://papers.canard.cc";
     };
   };
   config = lib.mkIf cfg.enable {
@@ -25,8 +25,8 @@ in {
 	  continue_on_soft_render_error = true;
         };
         PAPERLESS_URL = cfg.url;
-	PAPERLESS_ALLOWED_HOSTS = "localhost,192.168.1.110,home.canard.cc";
-	PAPERLESS_CORS_ALLOWED_HOSTS = "localhost,192.168.1.110,home.canard.cc";
+        # PAPERLESS_ALLOWED_HOSTS = "localhost,192.168.1.110,home.canard.cc";
+        # PAPERLESS_CORS_ALLOWED_HOSTS = "localhost,192.168.1.110,home.canard.cc";
 	# USE_X_FORWARD_HOST = true;
 	# USE_X_FORWARD_PORT = true;
 	# PAPERLESS_PROXY_SSL_HEADER = [ "HTTP_X_FORWARDED_PROTO" "https"];

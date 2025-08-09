@@ -12,9 +12,26 @@ in{
   imports = [
     ./hardware-configuration.nix
     ../common.nix
-    ../modules/docker.nix
+    ../modules/gui/DEs.nix
   ];
- enableDocker = true;
+
+  de = {
+    enable = true;
+    xfce.enable = true;
+  };
+
+  services.homer = {
+    enable = true;
+    settings = {
+      title = "App dashboard";
+    };
+    virtualHost.nginx.enable = true;
+    virtualHost.domain = "home.canard.cc";
+  };
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 80 443 8080 ];
+  };
 
   environment.systemPackages = [
     pkgs.minimal-grub-theme
@@ -44,20 +61,7 @@ in{
 
   networking.hostName = "lenovo-laptop";
 
-  # GUI
-  services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
-
   services.printing.enable = true;
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
   users.users.lenovo = {
     isNormalUser = true;
     description = "lenovo";
