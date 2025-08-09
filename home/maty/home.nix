@@ -8,6 +8,7 @@ in {
     ../modules/alacritty.nix
     ../modules/kitty.nix
     ../modules/mangohud.nix
+    ../modules/obsidian.nix
   ];
   nixvim.enable = true;
   devEnvs.enable = true;
@@ -18,11 +19,13 @@ in {
 
   programs.home-manager.enable = true;
 
+  programs.obsidian.enable = true;
+
   home.packages = with pkgs; [
     # GUI
-    discord-ptb
-    obsidian
+    discord
     pinta
+    aseprite
 
     # CLI
     unzip
