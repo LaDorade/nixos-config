@@ -1,5 +1,7 @@
-{ config, pkgs, inputs, mainUser, system, hostName, ... }:
-let username = mainUser;
+{ config, pkgs, lib, inputs, mainUser, system, hostName, ... }:
+let
+  username = mainUser;
+  fflorent = import ../modules/fflorent { inherit pkgs lib ; };
 in {
   imports = [
     # Include the results of the hardware scan.
@@ -12,49 +14,32 @@ in {
     enable = true;
     plasma.enable = true;
   };
+  services.xserver.videoDrivers = [ "amdgpu" ];
   services.displayManager.sddm = {
     theme = "${pkgs.where-is-my-sddm-theme}/share/sddm/themes/where_is_my_sddm_theme";
   };
+  hardware.bluetooth.enable = true;
 
-  # avahi required for service discovery
-  services.avahi.enable = true;
-  services.pipewire = {
-    raopOpenFirewall = true;
-    extraConfig.pipewire = {
-      "10-airplay" = {
-        "context.modules" = [
-          {
-            name = "libpipewire-module-raop-discover";
-
-            # increase the buffer size if you get dropouts/glitches
-            args = {
-              "raop.latency.ms" = 1500;
-            };
-          }
-        ];
-      };
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
+  boot.plymouth = {
+    enable = true;
+    theme = "fflorent";
+    themePackages = [ pkgs.plymouth-blahaj-theme fflorent ];
+  };
+  boot.loader = {
+    timeout = 20;
+    efi.efiSysMountPoint = "/boot";
+    grub = {
+      enable = true;
+      theme = "${pkgs.minimal-grub-theme}";
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+      devices = ["nodev"];
+      useOSProber = true;
+      # extraEntriesBeforeNixOs = false;
     };
   };
-
-  # Bootloader.
-  boot = {
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-    };
-    kernelPackages = pkgs.linuxPackages_latest;
-  };
-  fileSystems."/mnt/steamgames" = {
-    device = "/dev/disk/by-uuid/17ee64be-2d28-4040-ad87-f3a22a44ce1e";
-    fsType = "ext4";
-  };
-  systemd.tmpfiles.rules = [
-    # Format : type path mode user group age argument
-    "d /mnt/steamgames 0770 root gamer - -"
-  ];
-
-  hardware.graphics = { enable = true; };
-  services.xserver.videoDrivers = [ "amdgpu" ];
 
   networking.hostName = hostName; # Define your hostname.
   services.printing.enable = true;
@@ -78,8 +63,11 @@ in {
   environment.systemPackages = with pkgs; [ 
     inputs.zen-browser.packages."${system}".twilight
     gparted
-    lact
+    lact # manage amd GPU
+    solaar # manager logitech devices
   ];
+  hardware.logitech.wireless.enable = true; # neeeded by solar
+  hardware.logitech.wireless.enableGraphical = true;
   systemd.packages = with pkgs; [ lact ];
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
 
