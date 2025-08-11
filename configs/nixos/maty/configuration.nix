@@ -16,6 +16,26 @@ in {
     theme = "${pkgs.where-is-my-sddm-theme}/share/sddm/themes/where_is_my_sddm_theme";
   };
 
+  # avahi required for service discovery
+  services.avahi.enable = true;
+  services.pipewire = {
+    raopOpenFirewall = true;
+    extraConfig.pipewire = {
+      "10-airplay" = {
+        "context.modules" = [
+          {
+            name = "libpipewire-module-raop-discover";
+
+            # increase the buffer size if you get dropouts/glitches
+            args = {
+              "raop.latency.ms" = 1500;
+            };
+          }
+        ];
+      };
+    };
+  };
+
   # Bootloader.
   boot = {
     loader = {
@@ -57,6 +77,7 @@ in {
   # Manager AMD gpu
   environment.systemPackages = with pkgs; [ 
     inputs.zen-browser.packages."${system}".twilight
+    gparted
     lact
   ];
   systemd.packages = with pkgs; [ lact ];
