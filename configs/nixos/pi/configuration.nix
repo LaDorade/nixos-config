@@ -1,6 +1,8 @@
 { config, pkgs, lib, mainUser, hostName, ... }: {
   imports = [ ./hardware-configuration.nix ../common.nix ];
   networking.hostName = hostName;
+  networking.wireless.enable = true;
+  networking.networkmanager.enable = lib.mkForce false;
   services.openssh = {
     enable = true;
     settings.PermitRootLogin = "yes";
@@ -55,7 +57,7 @@
           add_header 'Access-Control-Allow-Origin' 'https://home.canard.cc' always;
           add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE' always;
           add_header 'Access-Control-Allow-Headers' 'Origin, Content-Type, Accept, Authorization' always;
-          add_header 'Access-Control-Allow-Credentials' 'true' always;
+	  add_header 'Access-Control-Allow-Credentials' 'true' always;
 
           # Préflight OPTIONS
           if ($request_method = 'OPTIONS') {
@@ -67,11 +69,45 @@
         '';
      };
    };
+   virtualHosts."papers.home.canard.cc" = {
+     enableACME = true;
+     forceSSL = true;
+     locations."/" = {
+       proxyPass = "http://192.168.1.76:28981";
+       proxyWebsockets = true;
+       extraConfig = ''
+          # CORS Headers
+          add_header 'Access-Control-Allow-Origin' 'https://home.canard.cc' always;
+          add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE' always;
+          add_header 'Access-Control-Allow-Headers' 'Origin, Content-Type, Accept, Authorization' always;
+	  add_header 'Access-Control-Allow-Credentials' 'true' always;
+
+          # Préflight OPTIONS
+          if ($request_method = 'OPTIONS') {
+              # add_header 'Access-Control-Max-Age' 86400;
+              # add_header 'Content-Length' 0;
+              # add_header 'Content-Type' 'text/plain charset=UTF-8';
+              return 204;
+          }
+       '';
+     };
+    };
+   virtualHosts."~^(.*).home.canard.cc" = {
+    locations."/" = {
+     return = "200 '<html><body>It works</body></html>'";
+     extraConfig = ''
+        default_type text/html;
+      '';
+    };
+   };
   };
   security.acme.acceptTerms = true;
-  security.acme.certs = { 
-    "home.canard.cc".email = "mathisjung02@gmail.com";
-    "papers.canard.cc".email = "mathisjung02@gmail.com";
+  security.acme.certs = let
+     email = "mathisjung02@gmail.com";
+  in{ 
+    "home.canard.cc".email = email;
+    "papers.canard.cc".email = email;
+    "papers.home.canard.cc".email = email;
   };
   networking.firewall = {
     enable = true;

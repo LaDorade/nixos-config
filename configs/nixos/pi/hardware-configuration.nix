@@ -2,6 +2,13 @@
 
 {
   boot.kernelPackages = lib.mkDefault pkgs.linuxKernel.packages.linux_rpi3;
+  boot.kernelModules = [ "brcmfmac" ];
+
+  hardware.enableAllFirmware = true;
+  hardware.firmware = with pkgs; [
+    firmwareLinuxNonfree
+    raspberrypiWirelessFirmware
+  ];
 
   fileSystems = {
     "/" = {
