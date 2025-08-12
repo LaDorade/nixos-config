@@ -5,10 +5,12 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules =
-    [ "nvme" "xhci_pci" "ahci" "thunderbolt" "usbhid" "uas" "sd_mod" ];
+    [ "nvme" "xhci_pci" "ahci" "thunderbolt" "usbhid" "uas" "sd_mod" "hid_logitech_dj" "hid_generic" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/4bb379d3-9b33-45fc-a6c1-bb05281362a0";
@@ -20,6 +22,17 @@
     fsType = "vfat";
     options = [ "fmask=0077" "dmask=0077" ];
   };
+
+  fileSystems."/mnt/steamgames" = {
+    device = "/dev/disk/by-uuid/17ee64be-2d28-4040-ad87-f3a22a44ce1e";
+    fsType = "ext4";
+  };
+  systemd.tmpfiles.rules = [
+    # Format : type path mode user group age argument
+    "d /mnt/steamgames 0770 root gamer - -"
+  ];
+
+  hardware.graphics = { enable = true; };
 
   swapDevices = [ ];
 

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, osConfig, ... }:
+{ config, lib, pkgs, osConfig, home, ... }:
 let
 in {
   imports = [
@@ -8,6 +8,8 @@ in {
     ../../modules/vscode.nix
     ../../modules/dev.nix
   ];
+
+  programs.zen-browser.enable = true;
 
   devEnvs = {
     enable = true; # Enable global dev environment

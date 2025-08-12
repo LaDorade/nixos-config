@@ -6,7 +6,10 @@ let
   commonPackages = with pkgs; [ ];
   rustPackages = with pkgs; [ rustc cargo rust-analyzer rustfmt ];
   phpPackages = with pkgs; [ php php84Packages.composer ];
-  nodePackages = with pkgs; [ nodejs_24 yarn ]; # Node contains npm, npx
+  nodePackages = with pkgs; [
+    nodejs_24 # Node contains npm, npx
+    (yarn.override { withNode = false; }) # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/ya/yarn/package.nix
+  ];
 in {
   options.devEnvs = {
     enable = mkEnableOption "Global dev env";

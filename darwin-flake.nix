@@ -11,8 +11,10 @@ let
         hostName = hostname;
       };
       modules = [
-        ./hosts/darwin/${hostname}/configuration.nix
+        ./configs/darwin/${hostname}/configuration.nix
         inputs.mac-app-util.darwinModules.default
+
+        # home manager global config
         inputs.home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -23,25 +25,28 @@ let
           home-manager.sharedModules = [
             inputs.nixvim.homeModules.nixvim
             inputs.mac-app-util.homeManagerModules.default
+            inputs.zen-browser.homeModules.twilight
           ];
           home-manager.extraSpecialArgs = {
             mainUser = username;
             hostName = hostname;
           };
         }
+        
+        # nix-homebrew global config
         inputs.nix-homebrew.darwinModules.nix-homebrew
         {
           nix-homebrew = {
             user = username;
             enable = true;
             enableRosetta = true;
-            taps = {
-              "homebrew/homebrew-core" = inputs.homebrew-core;
-              "homebrew/homebrew-cask" = inputs.homebrew-cask;
-              "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
-            };
-            mutableTaps = false;
-            autoMigrate = true;
+            # taps = {
+            #   "homebrew/homebrew-core" = inputs.homebrew-core;
+            #   "homebrew/homebrew-cask" = inputs.homebrew-cask;
+            #   "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+            # };
+            # mutableTaps = false;
+            # autoMigrate = true;
           };
         }
       ];
