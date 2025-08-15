@@ -5,15 +5,15 @@
     ./nginx.nix
   ];
   networking.hostName = hostName;
-  networking.wireless.enable = true;
+  networking.wireless.enable = false;
   networking.networkmanager.enable = lib.mkForce false;
   services.openssh = {
     enable = true;
-    settings.PermitRootLogin = "yes";
   };
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 8080 ];
+    allowedTCPPorts = [ 67 80 443 8080 ];
+    allowedUDPPorts = [ 67 ];  # DHCP
   };
 
   users.users.${mainUser} = {
