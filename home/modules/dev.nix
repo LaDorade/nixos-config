@@ -5,6 +5,7 @@ let
 
   commonPackages = with pkgs; [ ];
   rustPackages = with pkgs; [ rustc cargo rust-analyzer rustfmt ];
+  goPackages = with pkgs; [ go ];
   phpPackages = with pkgs; [ php php84Packages.composer ];
   nodePackages = with pkgs; [
     nodejs_24 # Node contains npm, npx
@@ -14,6 +15,7 @@ in {
   options.devEnvs = {
     enable = mkEnableOption "Global dev env";
     rustEnv.enable = mkEnableOption "Rust dev environment";
+    goEnv.enable = mkEnableOption "Go dev environment";
     phpEnv.enable = mkEnableOption "PHP dev environment";
     nodeEnv.enable = mkEnableOption "Js node dev environment";
   };
@@ -23,6 +25,7 @@ in {
       commonPackages ++ lib.optionals cfg.rustEnv.enable rustPackages
       ++ lib.optionals cfg.nodeEnv.enable nodePackages
       ++ lib.optionals cfg.phpEnv.enable phpPackages
+      ++ lib.optionals cfg.goEnv.enable goPackages
     ;
   };
 }
