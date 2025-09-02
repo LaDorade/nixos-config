@@ -9,6 +9,7 @@
   users.users.${mainUser} = {
     name = "${mainUser}";
     home = "/Users/${mainUser}";
+    shell = pkgs.fish;
   };
     # System packages
   nixpkgs.config.allowUnfree = true;

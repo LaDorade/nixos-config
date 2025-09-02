@@ -8,7 +8,6 @@
   # because nix darwin does not have programs.nh
   programs.nh = {
     enable = true;
-    flake = null;
     clean.enable = true;
   };
 

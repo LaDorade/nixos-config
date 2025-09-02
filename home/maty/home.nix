@@ -19,8 +19,6 @@ in {
 
   programs.home-manager.enable = true;
 
-  programs.obsidian.enable = true;
-
   home.packages = with pkgs; [
     # GUI
     discord

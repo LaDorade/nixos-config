@@ -1,5 +1,9 @@
 { config, pkgs, lib, ... }: {
-  imports = [ ../common.nix ];
+  imports = [
+    ../common.nix
+    ../modules/fish
+    # ../modules/kitty.nix
+  ];
 
   # ? Workaround to see home-manager apps in spotlight
   # * Now replaced by mac-app-util
