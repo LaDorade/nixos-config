@@ -7,6 +7,8 @@ in {
     ../../modules/dev.nix
   ];
 
+  nixvim.enable = true;
+
   devEnvs = {
     enable = true; # Enable global dev environment
     phpEnv.enable = true;

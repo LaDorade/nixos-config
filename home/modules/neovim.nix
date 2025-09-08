@@ -20,7 +20,7 @@
         treesitter = {
           enable = true;
           settings = {
-            ensure_installed = [ "lua" "python" "rust" "nix" "json" ];
+            ensure_installed = [ "lua" "python" "rust" "nix" "json" "go" ];
             highlight = {
               enable = true;
               # additionalVimRegexHighlighting = false;
@@ -46,7 +46,7 @@
       colorschemes.everforest.enable = true;
       plugins.lualine.enable = true;
 
-      extraPackages = with pkgs; [ wl-clipboard ];
+      extraPackages = lib.mkIf (!pkgs.stdenv.isDarwin) (with pkgs; [ wl-clipboard ]);
     };
   };
 }
