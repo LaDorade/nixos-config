@@ -13,24 +13,21 @@ in{
     ./hardware-configuration.nix
     ../common.nix
     ../modules/gui/DEs.nix
+    ../modules/paperless-ngx.nix
   ];
 
   de = {
     enable = true;
     xfce.enable = true;
   };
-
-  services.homer = {
+  paperless = {
     enable = true;
-    settings = {
-      title = "App dashboard";
-    };
-    virtualHost.nginx.enable = true;
-    virtualHost.domain = "home.canard.cc";
+    url = "https://papers.home.canard.cc";
   };
+  services.paperless.address = "192.168.1.134";
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 8080 ];
+    allowedTCPPorts = [ 80 443 8080 28981 ];
   };
 
   environment.systemPackages = [

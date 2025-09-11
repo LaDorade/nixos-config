@@ -8,22 +8,22 @@ in {
       type = with lib.types; uniq str;
       description = "worldwide url";
       example = "https://snoup.fr";
-      default = "https://papers.canard.cc";
+      default = "https://papers.home.canard.cc";
     };
   };
   config = lib.mkIf cfg.enable {
     services.paperless = {
       enable = true;
-      consumptionDirIsPublic = true;
+      # consumptionDirIsPublic = true;
       settings = {
-        PAPERLESS_CONSUMER_IGNORE_PATTERN = [
-          ".DS_STORE/*"
-          "desktop.ini"
-        ];
-        PAPERLESS_OCR_LANGUAGE = "fra+eng";
-        PAPERLESS_OCR_USER_ARGS = {
-	  continue_on_soft_render_error = true;
-        };
+        # PAPERLESS_CONSUMER_IGNORE_PATTERN = [
+        #   ".DS_STORE/*"
+        #   "desktop.ini"
+        # ];
+        # PAPERLESS_OCR_LANGUAGE = "fra+eng";
+        # PAPERLESS_OCR_USER_ARGS = {
+	  # continue_on_soft_render_error = true;
+	  #      };
         PAPERLESS_URL = cfg.url;
         # PAPERLESS_ALLOWED_HOSTS = "localhost,192.168.1.110,home.canard.cc";
         # PAPERLESS_CORS_ALLOWED_HOSTS = "localhost,192.168.1.110,home.canard.cc";
