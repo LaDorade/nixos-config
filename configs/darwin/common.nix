@@ -46,10 +46,9 @@
   # environment.variables.NIX_APP_LINK_DIR = "/Applications/Nix Apps";
 
   # Fonts
-  # fonts.fontDir.enable = true;
-  # fonts.fonts = with pkgs; [
-  #   (nerdfonts.override {fonts = ["FiraCode" "DroidSansMono"];})
-  # ];
+  fonts.packages = with pkgs; [
+    jetbrains-mono
+  ];
 
   # System settings
   system.stateVersion = 6;

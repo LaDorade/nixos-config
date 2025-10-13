@@ -10,6 +10,8 @@ let
   nodePackages = with pkgs; [
     nodejs_24 # Node contains npm, npx
     (yarn.override { withNode = false; }) # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/ya/yarn/package.nix
+    (pnpm.override { withNode = false; })
+    bun
   ];
 in {
   options.devEnvs = {

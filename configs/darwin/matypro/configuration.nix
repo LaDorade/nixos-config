@@ -6,7 +6,7 @@
     enable = true;
     onActivation.cleanup = "uninstall";
 
-    brews = [ "cowsay" ];
-    casks = [ "bruno" ];
+    brews = [ ];
+    casks = [ "bruno" "arduino-ide" "blender"];
   };
 }

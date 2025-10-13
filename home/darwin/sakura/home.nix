@@ -17,6 +17,9 @@ in {
     goEnv.enable = true;
   };
 
+  home.packages = with pkgs; [
+  ];
+
   # https://home-manager-options.extranix.com/?query=programs.nh.flake&release=master
   programs.nh.flake = "/Users/sakura/Documents/Code/nix/nixos-config";
 
