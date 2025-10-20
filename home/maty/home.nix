@@ -14,6 +14,17 @@ in {
   devEnvs.enable = true;
   devEnvs.rustEnv.enable = true;
 
+  programs.obsidian = {
+    defaultSettings.communityPlugins = [
+      # pkgs.git
+    ]; 
+    vaults = {
+      notes = {
+        target = "Documents/notes";
+      };
+    };
+  };
+
   home.username = username;
   home.homeDirectory = "/home/${username}";
 
@@ -24,10 +35,15 @@ in {
     discord
     pinta
     aseprite
+    blender
 
     # CLI
     unzip
     file
+
+    # Dev Board
+    arduino-ide
+    python314 # mandatory for arduino-ide
   ];
 
   # Version de la config, doit rester constante après première install

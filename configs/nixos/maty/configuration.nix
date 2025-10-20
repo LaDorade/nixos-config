@@ -22,6 +22,7 @@ in {
 
   # boot.loader.systemd-boot.enable = true;
   # boot.loader.efi.canTouchEfiVariables = true;
+  boot.extraModulePackages = [ pkgs.exfat ];
   boot.plymouth = {
     enable = true;
     theme = "fflorent";
@@ -50,7 +51,7 @@ in {
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = [ "networkmanager" "wheel" "gamer" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" "gamer" ];
     packages = with pkgs; [ ];
     shell = pkgs.fish;
   };
@@ -65,11 +66,13 @@ in {
     gparted
     lact # manage amd GPU
     solaar # manager logitech devices
+    exfat
   ];
   hardware.logitech.wireless.enable = true; # neeeded by solar
   hardware.logitech.wireless.enableGraphical = true;
   systemd.packages = with pkgs; [ lact ];
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
