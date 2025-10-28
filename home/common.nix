@@ -17,8 +17,10 @@
 
   programs.git = {
     enable = true;
-    userName = "matysse";
-    userEmail = "mathisjung02@gmail.com";
+    settings = {
+      user.name = "matysse";
+      user.email = "mathisjung02@gmail.com";
+    };
   };
 
   programs.bash.enable = true;
