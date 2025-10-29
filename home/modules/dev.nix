@@ -4,7 +4,7 @@ let
   cfg = config.devEnvs;
 
   commonPackages = with pkgs; [ ];
-  rustPackages = with pkgs; [ rustc cargo rust-analyzer rustfmt ];
+  rustPackages = with pkgs; [ rustup ];
   goPackages = with pkgs; [ go ];
   phpPackages = with pkgs; [ php php84Packages.composer ];
   nodePackages = with pkgs; [
