@@ -4,8 +4,11 @@ let
   cfg = config.devEnvs;
 
   commonPackages = with pkgs; [ ];
+<<<<<<< HEAD
   rustPackages = with pkgs; [ rustup ];
-  goPackages = with pkgs; [ go ];
+=======
+  goPackages = with pkgs; [ go wgo ];
+>>>>>>> 1c395d5 (added wgo to go dev)
   phpPackages = with pkgs; [ php php84Packages.composer ];
   nodePackages = with pkgs; [
     nodejs_24 # Node contains npm, npx
