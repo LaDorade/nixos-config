@@ -1,9 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, hostName, ... }:
 
 {
   imports = [
     ../common.nix
   ];
+
+  networking.hostName = hostName; 
 
   environment.systemPackages = with pkgs; [
     git
