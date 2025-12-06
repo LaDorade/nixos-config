@@ -36,6 +36,8 @@
       # to have it up-to-date or simply don't specify the nixpkgs input
       # inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
@@ -44,8 +46,9 @@
       
       # Import des modules de configuration
       darwinModule = import ./darwin-flake.nix { inherit inputs lib; };
-      nixosModule = import ./nixos-flake.nix { inherit inputs lib; };
+      nixosModule  = import ./nixos-flake.nix  { inherit inputs lib; };
+      wslModule    = import ./wsl-flake.nix    { inherit inputs lib; };
     in 
       # Merge des configurations Darwin et NixOS
-      darwinModule // nixosModule;
+      darwinModule // nixosModule // wslModule;
 }
