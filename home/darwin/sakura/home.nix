@@ -1,23 +1,37 @@
-{ config, lib, pkgs, mainUser, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  mainUser,
+  ...
+}:
 let
-in {
+in
+{
   imports = [
     ../common.nix
     ../../modules/obsidian.nix
     ../../modules/dev.nix
+    ../../modules/vscode.nix
+    ../../modules/kitty.nix
   ];
 
   nixvim.enable = true;
 
   devEnvs = {
-    enable = true; # Enable global dev environment
-    phpEnv.enable = true;
+    enable         = true; # Enable global dev environment
+    phpEnv.enable  = true;
     nodeEnv.enable = true;
     rustEnv.enable = true;
-    goEnv.enable = true;
+    goEnv.enable   = true;
+    zigEnv.enable  = true;
   };
 
   home.packages = with pkgs; [
+    mosquitto
+    yt-dlp
+    emacs
+    # c3c, problem with fish completions
   ];
 
   # https://home-manager-options.extranix.com/?query=programs.nh.flake&release=master

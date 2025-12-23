@@ -1,8 +1,14 @@
-{ config, pkgs, mainUser, ... }: {
+{
+  config,
+  pkgs,
+  mainUser,
+  ...
+}:
+{
   imports = [
     ../base.nix
     ./fish.nix
- ];
+  ];
 
   system.primaryUser = mainUser;
   # User settings
@@ -11,13 +17,21 @@
     home = "/Users/${mainUser}";
     shell = pkgs.fish;
   };
-    # System packages
+  # System packages
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [ nixfmt nixd ];
+  environment.systemPackages = with pkgs; [
+    nixfmt
+    nixd
+  ];
 
   # Nix configuration
   nix = {
-    settings = { experimental-features = [ "nix-command" "flakes" ]; };
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
     gc = {
       automatic = true;
       interval = {
@@ -39,7 +53,6 @@
       osascript -e "tell app \"Finder\" to make alias file at POSIX file \"/Users/${mainUser}/Applications/Nix/\" to POSIX file \"$src\" with properties {name: \"$appname\"}";
     done
   '');
-
 
   # environment.pathsToLink = [ "/Applications/Nix Apps" ];
   # # Pour créer automatiquement le dossier et gérer les liens d’applications :

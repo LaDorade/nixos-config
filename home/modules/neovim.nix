@@ -28,6 +28,7 @@
           };
 
           grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+            c
             bash
             json
             lua
