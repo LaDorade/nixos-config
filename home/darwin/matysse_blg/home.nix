@@ -16,6 +16,7 @@ in {
     phpEnv.enable = true; # Enable PHP dev environment
     nodeEnv.enable = true; # Enable Node.js dev environment
     rustEnv.enable = true;
+    zigEnv.enable = true;
   };
 
   # Version de la config, doit rester constante après première install

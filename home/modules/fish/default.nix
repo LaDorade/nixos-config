@@ -13,10 +13,11 @@
       {name = "plugin-git"; src = plugin-git.src;}
     ];
     shellAbbrs = {
-      f= "$EDITOR \"$(fzf)\"";
+      f = "$EDITOR \"$(fzf)\"";
       "nix-shell" = "nix-shell --run $SHELL";
       "nixshell" = "nix shell -c $SHELL";
-      j= "just";
+      j = "just";
+      zb = "zig build";
     };
     shellAliases = {
       cd = "z";
