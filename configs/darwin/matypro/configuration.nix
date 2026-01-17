@@ -17,6 +17,7 @@
 
     brews = [ ];
     casks = [
+      "ghostty"
       "bruno"
       "arduino-ide"
       "blender"

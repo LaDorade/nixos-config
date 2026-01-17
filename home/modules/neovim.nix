@@ -1,10 +1,16 @@
-{ pkgs, lib, config, home, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  home,
+  ...
+}:
 {
   options = {
     nixvim.enable = lib.mkEnableOption "Enable nixvim";
   };
 
-  config = { 
+  config = {
     home.packages = lib.mkIf (!config.nixvim.enable) [ pkgs.neovim ];
     programs.nixvim = lib.mkIf config.nixvim.enable {
       enable = true;
@@ -15,12 +21,45 @@
       };
       plugins = {
         nix.enable = true;
+        zig.enable = true;
+
         comment.enable = true;
-        oil = { enable = true; };
+
+        oil = {
+          enable = true;
+        };
+        mini.enable = false;
+        telescope.enable = true;
+        web-devicons.enable = true;
+        cmp = {
+          enable = true;
+          autoEnableSources = true;
+          settings.sources = [
+            { name = "nvim_lsp"; }
+            { name = "path"; }
+            { name = "buffer"; }
+          ];
+        };
+        lsp = {
+          enable = true;
+          inlayHints = true;
+          servers = {
+            zls = {
+              enable = true;
+            };
+          };
+        };
         treesitter = {
           enable = true;
           settings = {
-            ensure_installed = [ "lua" "python" "rust" "nix" "json" "go" ];
+            ensure_installed = [
+              "lua"
+              "python"
+              "rust"
+              "nix"
+              "json"
+              "go"
+            ];
             highlight = {
               enable = true;
               # additionalVimRegexHighlighting = false;
@@ -41,11 +80,12 @@
             vimdoc
             xml
             yaml
+            zig
           ];
         };
+        lualine.enable = true;
       };
       colorschemes.everforest.enable = true;
-      plugins.lualine.enable = true;
 
       extraPackages = lib.mkIf (!pkgs.stdenv.isDarwin) (with pkgs; [ wl-clipboard ]);
     };

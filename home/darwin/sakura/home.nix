@@ -31,7 +31,11 @@ in
     mosquitto
     yt-dlp
     emacs
+    
     # c3c, problem with fish completions
+    
+    # debugging tools
+    lldb
   ];
 
   # https://home-manager-options.extranix.com/?query=programs.nh.flake&release=master
