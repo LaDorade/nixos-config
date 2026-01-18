@@ -22,11 +22,11 @@
       zb = "zig build";
 
       # js
-      p = pnpm
-      pi = pnpm i
-      pd = pnpm dev
-      y = yarn
-      yd = yarn dev
+      p  = "pnpm"    ;
+      pi = "pnpm i"  ;
+      pd = "pnpm dev";
+      y  = "yarn"    ;
+      yd = "yarn dev";
     };
     shellAliases = {
       cd = "z";
