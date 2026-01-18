@@ -14,10 +14,19 @@
     ];
     shellAbbrs = {
       f = "$EDITOR \"$(fzf)\"";
-      "nix-shell" = "nix-shell --run $SHELL";
-      "nixshell" = "nix shell -c $SHELL";
+      
+      # misc
       j = "just";
+      
+      # zig
       zb = "zig build";
+
+      # js
+      p = pnpm
+      pi = pnpm i
+      pd = pnpm dev
+      y = yarn
+      yd = yarn dev
     };
     shellAliases = {
       cd = "z";
