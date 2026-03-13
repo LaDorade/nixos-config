@@ -3,6 +3,8 @@
 {
   imports = [
     ../common.nix
+    ../modules/gui/DEs.nix
+    ../modules/docker.nix
   ];
 
   networking.hostName = hostName; 
@@ -11,12 +13,24 @@
   # https://nix-community.github.io/NixOS-WSL/how-to/vscode.html
   programs.nix-ld.enable = true;
 
+  de = {
+    enable = true;
+    xfce.enable = true;
+  };
+
   environment.systemPackages = with pkgs; [
     git
     vim 
     neovim
     ripgrep
     fastfetch
+
+    xorg.libX11
+    xorg.libXcursor
+    xorg.libXi
+    xorg.libXinerama
+    xorg.libXrandr
+    libGL
   ];
 
 

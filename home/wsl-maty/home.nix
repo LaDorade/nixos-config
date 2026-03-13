@@ -10,6 +10,8 @@ in {
   devEnvs.enable = true;
   devEnvs.nodeEnv.enable = true;
   devEnvs.rustEnv.enable = true;
+  devEnvs.zigEnv.enable  = true;
+  devEnvs.phpEnv.enable  = true;
 
   home.username = username;
   #home.homeDirectory = "/home/${username}";
@@ -17,6 +19,7 @@ in {
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
+    emacs
     # CLI
     unzip
     file

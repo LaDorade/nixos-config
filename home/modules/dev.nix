@@ -39,13 +39,14 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages =
+  home.packages =
       with pkgs;
       commonPackages
       ++ lib.optionals cfg.rustEnv.enable rustPackages
       ++ lib.optionals cfg.nodeEnv.enable nodePackages
       ++ lib.optionals cfg.phpEnv.enable phpPackages
       ++ lib.optionals cfg.goEnv.enable goPackages
-      ++ lib.optionals cfg.zigEnv.enable zigPackages;
+      ++ lib.optionals cfg.zigEnv.enable zigPackages
+    ;
   };
 }
