@@ -39,8 +39,7 @@ in
   };
 
   config = mkIf cfg.enable {
-  home.packages =
-      with pkgs;
+    home.packages =
       commonPackages
       ++ lib.optionals cfg.rustEnv.enable rustPackages
       ++ lib.optionals cfg.nodeEnv.enable nodePackages

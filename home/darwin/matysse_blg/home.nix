@@ -1,13 +1,22 @@
-{ config, lib, pkgs, osConfig, home, ... }:
-let
-in {
+{
+  # pkgs,
+  # config,
+  # lib,
+  # osConfig,
+  # home,
+  ...
+}:
+{
   imports = [
     ../common.nix
     ../../modules/fish
     ../../modules/kitty.nix
     ../../modules/vscode.nix
     ../../modules/dev.nix
+    ../../modules/nix.nix
   ];
+
+  nixenv.enable = true;
 
   programs.zen-browser.enable = true;
 
