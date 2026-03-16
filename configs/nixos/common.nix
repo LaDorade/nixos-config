@@ -4,7 +4,7 @@
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  networking.networkmanager.enable = true;
+  networking.networkmanager.enable = pkgs.lib.mkDefault true;
 
   nixpkgs.config.allowUnfree = true;
 

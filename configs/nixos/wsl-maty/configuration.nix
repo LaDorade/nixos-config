@@ -8,6 +8,7 @@
   ];
 
   networking.hostName = hostName; 
+  networking.networkmanager.enable = lib.mkForce false;
 
   # workaround to make vscode work
   # https://nix-community.github.io/NixOS-WSL/how-to/vscode.html
