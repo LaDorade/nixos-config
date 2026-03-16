@@ -11,7 +11,7 @@
     clean.enable = true;
   };
 
-  home.packages = with pkgs; [ just ripgrep fzf fastfetch htop ];
+  home.packages = with pkgs; [ just ripgrep fzf fastfetch htop tmux];
 
   programs.zoxide = { enable = true; };
 

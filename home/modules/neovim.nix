@@ -23,6 +23,9 @@
       colorschemes.everforest.enable = true;
 
       plugins = {
+	lazygit = {
+	  enable = true;
+	};
 	telescope = {
 	  enable = true;
 	  keymaps = {
@@ -43,6 +46,11 @@
 	  mode = "n";
 	  key = "<leader>pv";
 	  action.__raw = "vim.cmd.Ex"; # go to file tree
+	}
+	{
+	  mode = "n";
+	  key = "<leader>lg";
+	  action = "<cmd>LazyGit<cr>"; # open lazygit
 	}
       ];
 
