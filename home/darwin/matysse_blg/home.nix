@@ -9,6 +9,7 @@
 {
   imports = [
     ../common.nix
+    ../../modules/neovim.nix
     ../../modules/fish
     ../../modules/kitty.nix
     ../../modules/vscode.nix
@@ -19,6 +20,8 @@
   nixenv.enable = true;
 
   programs.zen-browser.enable = true;
+
+  nixvim.enable = true;
 
   devEnvs = {
     enable = true; # Enable global dev environment
