@@ -2,7 +2,6 @@
   pkgs,
   lib,
   config,
-  home,
   ...
 }:
 {
@@ -16,13 +15,42 @@
       enable = true;
       globals.mapleader = " ";
       opts = {
-        number = true;
-        relativenumber = true;
-        shiftwidth = 2; # tabwith is 2
+	number = true;
+	relativenumber = true;
+	tabstop = 4;    # indent to 4 space
+	shiftwidth = 0; # same as tabstop
       };
-      colorschemes.everforest.enable = true;
+      colorschemes.monokai-pro.enable = true;
 
+      lsp = {
+	keymaps = [
+	{
+	  key = "<leader>es";
+	  action = "<CMD>LspEslintFixAll<Enter>";
+	}
+	];
+	servers.nixd = {
+	  enable = true;
+	};
+	servers.eslint = {
+	  enable = true;
+	};
+	servers.tsgo = {
+	  enable = true;
+	};
+      };
       plugins = {
+	lsp = {
+	  enable = true;
+	};
+	lsp-lines.enable = true;
+	lint.enable = true;
+	treesitter = {
+	  enable = true;
+	  highlight.enable = true;
+	  indent.enable = true;
+	};
+	web-devicons.enable = true;
 	lazygit = {
 	  enable = true;
 	};
