@@ -1,88 +1,115 @@
 {
-  pkgs,
-  lib,
-  config,
-  ...
+pkgs,
+lib,
+config,
+...
 }:
 {
-  options = {
-    nixvim.enable = lib.mkEnableOption "Enable nixvim";
-  };
+	options = {
+		nixvim.enable = lib.mkEnableOption "Enable nixvim";
+	};
 
-  config = {
-    home.packages = lib.mkIf (!config.nixvim.enable) [ pkgs.neovim ];
-    programs.nixvim = lib.mkIf config.nixvim.enable {
-      enable = true;
-      globals.mapleader = " ";
-      opts = {
-	number = true;
-	relativenumber = true;
-	tabstop = 4;    # indent to 4 space
-	shiftwidth = 0; # same as tabstop
-      };
-      colorschemes.monokai-pro.enable = true;
+	config = {
+		home.packages = lib.mkIf (!config.nixvim.enable) [ pkgs.neovim ];
+		programs.nixvim = lib.mkIf config.nixvim.enable {
+			enable = true;
+			globals.mapleader = " ";
+			diagonostic = {
+				virtual_lines = true;
+				virtual_text = false;
 
-      lsp = {
-	keymaps = [
-	{
-	  key = "<leader>es";
-	  action = "<CMD>LspEslintFixAll<Enter>";
-	}
-	];
-	servers.nixd = {
-	  enable = true;
-	};
-	servers.eslint = {
-	  enable = true;
-	};
-	servers.tsgo = {
-	  enable = true;
-	};
-      };
-      plugins = {
-	lsp = {
-	  enable = true;
-	};
-	lsp-lines.enable = true;
-	lint.enable = true;
-	treesitter = {
-	  enable = true;
-	  highlight.enable = true;
-	  indent.enable = true;
-	};
-	web-devicons.enable = true;
-	lazygit = {
-	  enable = true;
-	};
-	telescope = {
-	  enable = true;
-	  keymaps = {
-	    "<leader>pf" = {
-	      action = "find_files";
-	      options = {
-	        desc = "Telescope find files";
-	      };
-	    };
-	    "<leader>pg" = {
-	      action = "live_grep";
-	    };
-	  };
-	};
-      };
-      keymaps = [
-	{
-	  mode = "n";
-	  key = "<leader>pv";
-	  action.__raw = "vim.cmd.Ex"; # go to file tree
-	}
-	{
-	  mode = "n";
-	  key = "<leader>lg";
-	  action = "<cmd>LazyGit<cr>"; # open lazygit
-	}
-      ];
+			};
+			opts = {
+				number = true;
+				relativenumber = true;
+				tabstop = 4;    # indent to 4 space
+				shiftwidth = 0; # same as tabstop
+			};
+			colorschemes.monokai-pro.enable = true;
 
-      extraPackages = lib.mkIf (!pkgs.stdenv.isDarwin) (with pkgs; [ wl-clipboard ]);
-    };
-  };
+			lsp = {
+				keymaps = [
+					{
+						key = "<leader>es";
+						action = "<CMD>LspEslintFixAll<Enter>";
+					}
+					{
+						key = "gd";
+						lspBufAction = "definition";
+					}
+					{
+						key = "gD";
+						lspBufAction = "references";
+					}
+					{
+						key = "gt";
+						lspBufAction = "type_definition";
+					}
+					{
+						key = "gi";
+						lspBufAction = "implementation";
+					}
+					{
+						key = "K";
+						lspBufAction = "hover";
+					}
+				];
+				servers = {
+					vtsls.enable  = true;
+					nixd.enable   = true;
+					eslint.enable = true;
+					svelte.enable = true;
+					tailwindcss.enable = true;
+				};
+			};
+			plugins = {
+				lsp.enable = true;
+				tiny-inline-diagnostic.enable = true;
+				lint.enable = true;
+				treesitter = {
+					enable = true;
+					highlight.enable = true;
+					indent.enable = true;
+				};
+				web-devicons.enable = true;
+				lazygit = {
+					enable = true;
+				};
+				telescope = {
+					enable = true;
+					keymaps = {
+						"<leader>pf" = {
+							action = "find_files";
+							options = {
+								desc = "Telescope find files";
+							};
+						};
+						"<leader>pb" = {
+							action = "buffers";
+							options = {
+								desc = "Telescope open buffers";
+							};
+						};
+						"<leader>pg" = {
+							action = "live_grep";
+						};
+					};
+				};
+			};
+			keymaps = [
+				{
+					mode = "n";
+					key = "<leader>pv";
+					action.__raw = "vim.cmd.Ex"; # go to file tree
+				}
+				{
+					mode = "n";
+					key = "<leader>lg";
+					action = "<cmd>LazyGit<cr>"; # open lazygit
+				}
+			];
+
+			extraPackages = lib.mkIf (!pkgs.stdenv.isDarwin) (with pkgs; [ wl-clipboard ]);
+		};
+	};
 }
