@@ -4,20 +4,31 @@ lib,
 config,
 ...
 }:
+let
+	lsps = with pkgs; [
+			vscode-langservers-extracted
+			lua-language-server
+	];
+in 
 {
 	options = {
+		neovim = {
+			enable = lib.mkEnableOption "Use Neovim";
+			useLsps = lib.mkEnableOption "Activate neovim lsps";
+		};
 		nixvim.enable = lib.mkEnableOption "Enable nixvim";
 	};
 
 	config = {
-		home.packages = lib.mkIf (!config.nixvim.enable) [ pkgs.neovim ];
+		home.packages = []
+		++ lib.optionals config.neovim.enable [ pkgs.neovim ]
+		++ lib.optionals config.neovim.useLsps lsps;
 		programs.nixvim = lib.mkIf config.nixvim.enable {
 			enable = true;
 			globals.mapleader = " ";
 			diagonostic = {
 				virtual_lines = true;
 				virtual_text = false;
-
 			};
 			opts = {
 				number = true;
