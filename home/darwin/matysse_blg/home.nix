@@ -21,7 +21,10 @@
 
   programs.zen-browser.enable = true;
 
-  nixvim.enable = true;
+  neovim = {
+	  enable  = true;
+	  useLsps = true;
+  };
 
   devEnvs = {
     enable = true; # Enable global dev environment

@@ -8,6 +8,8 @@ let
 	lsps = with pkgs; [
 			vscode-langservers-extracted
 			lua-language-server
+			svelte-language-server
+			tailwindcss-language-server
 	];
 in 
 {
@@ -21,7 +23,7 @@ in
 
 	config = {
 		home.packages = []
-		++ lib.optionals config.neovim.enable [ pkgs.neovim ]
+		++ lib.optionals config.neovim.enable [ pkgs.neovim pkgs.lazygit ]
 		++ lib.optionals config.neovim.useLsps lsps;
 		programs.nixvim = lib.mkIf config.nixvim.enable {
 			enable = true;
