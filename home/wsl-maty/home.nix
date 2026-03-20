@@ -3,6 +3,7 @@ let username = mainUser;
 in {
   imports = [
     ../common.nix
+	../modules/neovim.nix
     ../modules/dev.nix
     ../modules/fish
   ];

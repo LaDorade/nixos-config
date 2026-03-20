@@ -9,6 +9,7 @@
 {
   imports = [
     ../common.nix
+	../../modules/tmux.nix
     ../../modules/neovim.nix
     ../../modules/fish
     ../../modules/kitty.nix
@@ -21,6 +22,7 @@
 
   programs.zen-browser.enable = true;
 
+  tmux.enable = true;
   neovim = {
 	  enable  = true;
 	  useLsps = true;

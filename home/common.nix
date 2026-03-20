@@ -1,8 +1,4 @@
 { config, lib, pkgs, mainUser, ... }: {
-  imports = [
-    ./modules/neovim.nix
-  ];
-
   # ? Move this to the common of configs
   # but this can only be done in systemPackages
   # because nix darwin does not have programs.nh
@@ -11,7 +7,7 @@
     clean.enable = true;
   };
 
-  home.packages = with pkgs; [ just ripgrep fzf fastfetch htop tmux];
+  home.packages = with pkgs; [ just ripgrep fzf fastfetch htop ];
 
   programs.zoxide = { enable = true; };
 
