@@ -21,6 +21,7 @@ let
 
 	otherPackages = with pkgs; [
 		lazygit
+		tree-sitter
 	];
 in 
 {

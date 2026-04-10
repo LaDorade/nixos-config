@@ -25,7 +25,6 @@ let
           home-manager.sharedModules = [
             inputs.nixvim.homeModules.nixvim
             inputs.mac-app-util.homeManagerModules.default
-            inputs.zen-browser.homeModules.twilight
           ];
           home-manager.extraSpecialArgs = {
             mainUser = username;

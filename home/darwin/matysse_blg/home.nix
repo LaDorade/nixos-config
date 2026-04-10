@@ -20,8 +20,6 @@
 
   nixenv.enable = true;
 
-  programs.zen-browser.enable = true;
-
   tmux.enable = true;
   neovim = {
 	  enable  = true;
