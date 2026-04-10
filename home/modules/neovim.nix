@@ -1,93 +1,47 @@
 {
-  pkgs,
-  lib,
-  config,
-  home,
-  ...
+pkgs,
+lib,
+config,
+...
 }:
+let
+	lsps = with pkgs; [
+			vscode-langservers-extracted
+
+			lua-language-server
+
+			svelte-language-server
+			tailwindcss-language-server
+
+			typescript-go
+			vtsls # ts lsp
+
+			nixd # nix lsp
+	];
+
+	otherPackages = with pkgs; [
+		lazygit
+		tree-sitter
+	];
+in 
 {
-  options = {
-    nixvim.enable = lib.mkEnableOption "Enable nixvim";
-  };
+	options = {
+		neovim = {
+			enable = lib.mkEnableOption "Use Neovim";
+			useLsps = lib.mkEnableOption "Activate neovim lsps";
+		};
+	};
 
-  config = {
-    home.packages = lib.mkIf (!config.nixvim.enable) [ pkgs.neovim ];
-    programs.nixvim = lib.mkIf config.nixvim.enable {
-      enable = true;
-      opts = {
-        number = true;
-        relativenumber = true;
-        shiftwidth = 2; # tabwith is 2
-      };
-      plugins = {
-        nix.enable = true;
-        zig.enable = true;
+	config = {
+		home.packages = []
+			++ lib.optionals config.neovim.enable otherPackages
+			++ lib.optionals config.neovim.useLsps lsps;
 
-        comment.enable = true;
-
-        oil = {
-          enable = true;
-        };
-        mini.enable = false;
-        telescope.enable = true;
-        web-devicons.enable = true;
-        cmp = {
-          enable = true;
-          autoEnableSources = true;
-          settings.sources = [
-            { name = "nvim_lsp"; }
-            { name = "path"; }
-            { name = "buffer"; }
-          ];
-        };
-        lsp = {
-          enable = true;
-          inlayHints = true;
-          servers = {
-            zls = {
-              enable = true;
-            };
-          };
-        };
-        treesitter = {
-          enable = true;
-          settings = {
-            ensure_installed = [
-              "lua"
-              "python"
-              "rust"
-              "nix"
-              "json"
-              "go"
-            ];
-            highlight = {
-              enable = true;
-              # additionalVimRegexHighlighting = false;
-            };
-          };
-
-          grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-            c
-            bash
-            json
-            lua
-            make
-            markdown
-            nix
-            regex
-            toml
-            vim
-            vimdoc
-            xml
-            yaml
-            zig
-          ];
-        };
-        lualine.enable = true;
-      };
-      colorschemes.everforest.enable = true;
-
-      extraPackages = lib.mkIf (!pkgs.stdenv.isDarwin) (with pkgs; [ wl-clipboard ]);
-    };
-  };
+		programs.neovim = lib.mkIf config.neovim.enable {
+			enable = true;
+			defaultEditor = true;
+			vimAlias = true;
+			viAlias = true;
+		};
+	};
 }

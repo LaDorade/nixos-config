@@ -8,15 +8,16 @@
   ];
 
   networking.hostName = hostName; 
+  networking.networkmanager.enable = lib.mkForce false;
 
   # workaround to make vscode work
   # https://nix-community.github.io/NixOS-WSL/how-to/vscode.html
   programs.nix-ld.enable = true;
 
-  de = {
-    enable = true;
-    xfce.enable = true;
-  };
+  # de = {
+  #   enable = true;
+  #   xfce.enable = true;
+  # };
 
   environment.systemPackages = with pkgs; [
     git
@@ -25,12 +26,9 @@
     ripgrep
     fastfetch
 
-    xorg.libX11
-    xorg.libXcursor
-    xorg.libXi
-    xorg.libXinerama
-    xorg.libXrandr
-    libGL
+	gcc
+	libgcc
+	coreutils
   ];
 
 

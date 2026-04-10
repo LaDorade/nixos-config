@@ -3,10 +3,14 @@ let username = mainUser;
 in {
   imports = [
     ../common.nix
+	../modules/neovim.nix
     ../modules/dev.nix
     ../modules/fish
   ];
-  nixvim.enable = true;
+  neovim = {
+	  enable = true;
+	  useLsps = true;
+  };
   devEnvs.enable = true;
   devEnvs.nodeEnv.enable = true;
   devEnvs.rustEnv.enable = true;
@@ -19,10 +23,14 @@ in {
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    emacs
     # CLI
     unzip
     file
+
+	# C
+	clang-tools
+	libgcc
+	gnumake
   ];
 
   # Version de la config, doit rester constante après première install

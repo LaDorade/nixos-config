@@ -62,7 +62,6 @@ in {
   };
   # Manager AMD gpu
   environment.systemPackages = with pkgs; [ 
-    inputs.zen-browser.packages."${system}".twilight
     gparted
     lact # manage amd GPU
     solaar # manager logitech devices

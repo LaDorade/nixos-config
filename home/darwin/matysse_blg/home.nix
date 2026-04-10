@@ -9,6 +9,8 @@
 {
   imports = [
     ../common.nix
+	../../modules/tmux.nix
+    ../../modules/neovim.nix
     ../../modules/fish
     ../../modules/kitty.nix
     ../../modules/vscode.nix
@@ -18,7 +20,11 @@
 
   nixenv.enable = true;
 
-  programs.zen-browser.enable = true;
+  tmux.enable = true;
+  neovim = {
+	  enable  = true;
+	  useLsps = true;
+  };
 
   devEnvs = {
     enable = true; # Enable global dev environment

@@ -16,7 +16,10 @@ in
     ../../modules/kitty.nix
   ];
 
-  nixvim.enable = true;
+  neovim = {
+    enable  = true;
+    useLsps = true;
+  };
 
   devEnvs = {
     enable         = true; # Enable global dev environment

@@ -14,12 +14,12 @@
     ];
     shellAbbrs = {
       f = "$EDITOR \"$(fzf)\"";
-      
-      # misc
-      j = "just";
-      
+
       # zig
       zb = "zig build";
+
+	  # git
+      gs = "git status";
 
       # js
       p  = "pnpm"    ;
@@ -27,13 +27,17 @@
       pd = "pnpm dev";
       y  = "yarn"    ;
       yd = "yarn dev";
+
+	  # misc
+      j = "just";
+      c  = "clear";
+      h  = "history";
+      la = "ls -alh";
+      ll = "ls -lh";
     };
+
     shellAliases = {
       cd = "z";
-      c = "clear";
-      h = "history";
-      ll = "ls -alh";
-      gs = "git status";
     };
 
     shellInit = ''
