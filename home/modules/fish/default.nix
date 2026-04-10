@@ -19,7 +19,7 @@
       zb = "zig build";
 
 	  # git
-      gs    = "git status";
+      gs = "git status";
 
       # js
       p  = "pnpm"    ;
