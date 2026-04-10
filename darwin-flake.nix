@@ -23,7 +23,6 @@ let
             import ./home/darwin/${username}/home.nix;
           home-manager.backupFileExtension = "backup";
           home-manager.sharedModules = [
-            inputs.nixvim.homeModules.nixvim
             inputs.mac-app-util.homeManagerModules.default
           ];
           home-manager.extraSpecialArgs = {

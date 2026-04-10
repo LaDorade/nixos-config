@@ -24,7 +24,7 @@ let
           home-manager.users.${username} =
             import ./home/${username}/home.nix;
           home-manager.backupFileExtension = "backup";
-          home-manager.sharedModules = [ inputs.nixvim.homeModules.nixvim ];
+          home-manager.sharedModules = [];
           home-manager.extraSpecialArgs = {
             mainUser = username;
             hostName = hostname;

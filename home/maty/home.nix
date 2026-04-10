@@ -10,7 +10,7 @@ in {
     ../modules/mangohud.nix
     ../modules/obsidian.nix
   ];
-  nixvim.enable = true;
+  neovim.enable  = true;
   devEnvs.enable = true;
   devEnvs.rustEnv.enable = true;
 
