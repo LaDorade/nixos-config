@@ -28,7 +28,6 @@ in {
     file
 
 	# C
-	make
 	clang-tools
 	libgcc
 	gnumake
