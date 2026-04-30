@@ -1,5 +1,5 @@
 {
-  # pkgs,
+  pkgs,
   # config,
   # lib,
   # osConfig,
@@ -26,12 +26,17 @@
 	  useLsps = true;
   };
 
+  home.packages = with pkgs; [
+  	redis
+  ];
+
   devEnvs = {
-    enable = true; # Enable global dev environment
-    phpEnv.enable = true; # Enable PHP dev environment
-    nodeEnv.enable = true; # Enable Node.js dev environment
+    enable 		   = true;
+    phpEnv.enable  = true;
+    nodeEnv.enable = true;
     rustEnv.enable = true;
-    zigEnv.enable = true;
+    zigEnv.enable  = true;
+	goEnv.enable   = true;
   };
 
   # Version de la config, doit rester constante après première install

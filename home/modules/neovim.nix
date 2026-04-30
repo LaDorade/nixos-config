@@ -5,6 +5,7 @@ config,
 ...
 }:
 let
+	# TODO: move this into devEnv
 	lsps = with pkgs; [
 			vscode-langservers-extracted
 
@@ -17,6 +18,8 @@ let
 			vtsls # ts lsp
 
 			nixd # nix lsp
+
+			gopls # go lsp
 	];
 
 	otherPackages = with pkgs; [
