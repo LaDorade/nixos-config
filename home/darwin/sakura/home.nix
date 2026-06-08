@@ -13,7 +13,7 @@ in
     ../../modules/obsidian.nix
     ../../modules/dev.nix
     ../../modules/vscode.nix
-    ../../modules/kitty.nix
+    ../../modules/neovim.nix
   ];
 
   neovim = {
@@ -34,9 +34,11 @@ in
     mosquitto
     yt-dlp
     emacs
-    
+
     # c3c, problem with fish completions
-    
+    gcc-arm-embedded
+	qemu
+
     # debugging tools
     lldb
   ];

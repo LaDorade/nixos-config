@@ -18,7 +18,6 @@ let
 			vtsls # ts lsp
 
 			nixd # nix lsp
-
 			gopls # go lsp
 	];
 

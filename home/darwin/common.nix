@@ -2,7 +2,8 @@
   imports = [
     ../common.nix
     ../modules/fish
-    # ../modules/kitty.nix
+    ../modules/kitty.nix
+	../modules/ghostty.nix
   ];
 
   # ? Workaround to see home-manager apps in spotlight

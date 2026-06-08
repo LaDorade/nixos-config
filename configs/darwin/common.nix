@@ -17,6 +17,8 @@
     home = "/Users/${mainUser}";
     shell = pkgs.fish;
   };
+  programs.fish.enable = true;
+
   # System packages
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [

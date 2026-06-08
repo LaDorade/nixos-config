@@ -12,7 +12,6 @@
 	../../modules/tmux.nix
     ../../modules/neovim.nix
     ../../modules/fish
-    ../../modules/kitty.nix
     ../../modules/vscode.nix
     ../../modules/dev.nix
     ../../modules/nix.nix

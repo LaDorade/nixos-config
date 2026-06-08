@@ -50,7 +50,6 @@
 
     functions = {
       fish_prompt = builtins.readFile ./fish_prompt.fish;
-      fish_greeting = builtins.readFile ./fish_greeting.fish;
     };
   };
 }

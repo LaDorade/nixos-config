@@ -15,11 +15,11 @@
     enable = true;
     onActivation.cleanup = "uninstall";
 
-    brews = [ ];
+    brews = [
+		"make"
+	];
     casks = [
-      "ghostty"
       "bruno"
-      "arduino-ide"
       "blender"
     ];
   };
