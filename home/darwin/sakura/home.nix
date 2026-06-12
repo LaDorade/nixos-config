@@ -31,9 +31,7 @@ in
   };
 
   home.packages = with pkgs; [
-    mosquitto
     yt-dlp
-    emacs
 
     # c3c, problem with fish completions
     gcc-arm-embedded
