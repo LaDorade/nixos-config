@@ -14,6 +14,8 @@ let
 			svelte-language-server
 			tailwindcss-language-server
 
+			svelte-language-server
+			typescript-language-server
 			typescript-go
 			vtsls # ts lsp
 

@@ -11,6 +11,7 @@
     ../common.nix
 	../../modules/tmux.nix
     ../../modules/neovim.nix
+    ../../modules/emacs.nix
     ../../modules/fish
     ../../modules/vscode.nix
     ../../modules/dev.nix
@@ -19,6 +20,7 @@
 
   nixenv.enable = true;
 
+  emacs.enable = true;
   tmux.enable = true;
   neovim = {
 	  enable  = true;
