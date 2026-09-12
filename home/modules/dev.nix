@@ -8,7 +8,7 @@ let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.devEnvs;
 
-  commonPackages = with pkgs; [ cloc ];
+  commonPackages = with pkgs; [ cloc nil ];
 
   rustPackages = with pkgs; [ rustup ];
   zigPackages  = with pkgs; [ zig ];
@@ -21,6 +21,11 @@ let
     (pnpm.override { withNode = false; })
     bun
   ];
+  haskellPkgs = with pkgs; [
+    ghc
+    haskell-language-server
+    haskellPackages.hlint
+  ];
 in
 {
   options.devEnvs = {
@@ -31,6 +36,7 @@ in
     phpEnv.enable = mkEnableOption "PHP dev environment";
     nodeEnv.enable = mkEnableOption "Js node dev environment";
     zigEnv.enable = mkEnableOption "Zig dev environment";
+    haskellEnv.enable = mkEnableOption "Haskell dev environment";
   };
 
   config = mkIf cfg.enable {
@@ -42,6 +48,7 @@ in
       ++ lib.optionals cfg.goEnv.enable goPackages
       ++ lib.optionals cfg.zigEnv.enable zigPackages
       ++ lib.optionals cfg.odinEnv.enable odinPackages
+      ++ lib.optionals cfg.haskellEnv.enable haskellPkgs
     ;
   };
 }

@@ -15,6 +15,7 @@ in {
     rustEnv.enable = true;
     odinEnv.enable = true;
     zigEnv.enable  = true;
+    haskellEnv.enable = true;
   };
 
   home.username = username;

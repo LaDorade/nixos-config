@@ -29,6 +29,7 @@ in
     goEnv.enable   = true;
     zigEnv.enable  = true;
     odinEnv.enable = true;
+    haskellEnv.enable = true;
   };
 
   home.packages = with pkgs; [
