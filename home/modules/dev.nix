@@ -23,6 +23,7 @@ let
   ];
   haskellPkgs = with pkgs; [
     ghc
+    haskellPackages.ghcid
     haskell-language-server
     haskellPackages.hlint
   ];
