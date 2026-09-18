@@ -37,6 +37,7 @@
     zigEnv.enable  = true;
     goEnv.enable   = true;
     odinEnv.enable = true;
+    haskellEnv.enable = true;
   };
 
   # Version de la config, doit rester constante après première install
