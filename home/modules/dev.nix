@@ -10,7 +10,7 @@ let
 
   commonPackages = with pkgs; [ cloc nil ];
 
-  rustPackages = with pkgs; [ rustup ];
+  rustPackages = with pkgs; [ cargo rustc rust-analyzer clippy rustfmt ];
   zigPackages  = with pkgs; [ zig ];
   odinPackages = with pkgs; [ odin ols ];
   goPackages   = with pkgs; [ go wgo gopls ];
@@ -18,8 +18,7 @@ let
   nodePackages = with pkgs; [
     nodejs_26 # Node contains npm, npx
     (yarn.override { withNode = false; }) # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/ya/yarn/package.nix
-    (pnpm.override { withNode = false; })
-    bun
+    pnpm
   ];
   haskellPkgs = with pkgs; [
     ghc

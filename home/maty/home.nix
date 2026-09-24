@@ -15,6 +15,8 @@ in {
     rustEnv.enable = true;
     odinEnv.enable = true;
     zigEnv.enable  = true;
+    phpEnv.enable  = true;
+    nodeEnv.enable = true;
     haskellEnv.enable = true;
   };
 
@@ -28,10 +30,16 @@ in {
   home.packages = with pkgs; [
     # GUI
     discord
+    vlc
+    bruno
+    obs-studio
 
     # CLI
     unzip
     file
+
+    # Randoms
+    clang
   ];
 
   # Version de la config, doit rester constante après première install
