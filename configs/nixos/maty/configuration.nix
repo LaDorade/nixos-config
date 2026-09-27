@@ -18,6 +18,7 @@ in {
   #   theme = "${pkgs.where-is-my-sddm-theme}/share/sddm/themes/where_is_my_sddm_theme";
   # };
   services.xserver.videoDrivers = [ "amdgpu" ];
+  hardware.graphics.enable32Bit = true;
   hardware.bluetooth.enable = true;
 
   # boot.loader.systemd-boot.enable = true;
@@ -52,7 +53,6 @@ in {
     isNormalUser = true;
     description = username;
     extraGroups = [ "networkmanager" "wheel" "dialout" "gamer" ];
-    packages = with pkgs; [ ];
     shell = pkgs.fish;
   };
   programs.firefox.enable = true;
@@ -64,11 +64,12 @@ in {
   environment.systemPackages = with pkgs; [
     gparted
     lact # manage amd GPU
-    solaar # manager logitech devices
     exfat
+
+    bottles # wine in bottles
   ];
   hardware.logitech.wireless.enable = true; # neeeded by solar
-  hardware.logitech.wireless.enableGraphical = true;
+  programs.solaar.enable = true;
   systemd.packages = with pkgs; [ lact ];
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

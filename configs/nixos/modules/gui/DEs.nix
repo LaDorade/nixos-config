@@ -24,8 +24,8 @@ in{
     services.desktopManager.plasma6.enable = cfg.plasma.enable;
 
     # Enable the GNOME Desktop Environment.
-    services.xserver.displayManager.gdm.enable = cfg.gnome.enable;
-    services.xserver.desktopManager.gnome.enable = cfg.gnome.enable;
+    services.displayManager.gdm.enable = cfg.gnome.enable;
+    services.desktopManager.gnome.enable = cfg.gnome.enable;
 
     # Audio
     services.pulseaudio.enable = false;
