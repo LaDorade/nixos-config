@@ -40,6 +40,7 @@ in {
 
     # Randoms
     clang
+    google-chrome
   ];
 
   # Version de la config, doit rester constante après première install
