@@ -16,7 +16,7 @@ let
 
 			svelte-language-server
 			typescript-language-server
-			typescript-go
+			typescript
 			vtsls # ts lsp
 
 			nixd # nix lsp
