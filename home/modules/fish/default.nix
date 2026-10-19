@@ -21,6 +21,7 @@
 	  # git
       gs = "git status";
       gmm = "git merge (__git.default_branch)";
+      gpoo = "git push -o merge_request.create -o merge_request.auto_merge";
 
       # js
       p  = "pnpm"    ;
